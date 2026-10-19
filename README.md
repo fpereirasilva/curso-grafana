@@ -13,18 +13,26 @@ Se você é aluno do curso, abra o arquivo central no seu navegador para ter ace
 
 ---
 
-## 🚀 Como Subir o Laboratório dos Alunos (1 Clique)
+## 🚀 Como Subir e Parar o Laboratório dos Alunos (1 Clique)
 
-### Opção A: No Windows (via PowerShell)
+### 🪟 No Windows (via PowerShell):
 Com o Docker Desktop aberto, abra o PowerShell nesta pasta e execute:
 ```powershell
+# Para iniciar:
 .\iniciar-lab-alunos.ps1
+
+# Para parar:
+.\parar-lab-alunos.ps1
 ```
 
-### Opção B: No Linux / Ubuntu / WSL2
+### 🐧 No Linux / Ubuntu / WSL2:
 Com o Docker Engine instalado, abra o terminal nesta pasta e execute:
 ```bash
-bash ./Curso_Grafana_Green_V9/iniciar-lab.sh
+# Para iniciar:
+bash iniciar-lab.sh
+
+# Para parar:
+bash parar-lab.sh
 ```
 
 ### 🌐 Endereços dos Serviços no seu Computador:
@@ -40,7 +48,10 @@ Assim que os containers iniciarem, abra no seu navegador:
 ```text
 .
 ├── 00_COMECE_AQUI.html              ← Índice central interativo para alunos e professor
-├── iniciar-lab-alunos.ps1           ← Lançador automático para Windows
+├── iniciar-lab-alunos.ps1           ← Lançador para Windows (PowerShell)
+├── parar-lab-alunos.ps1             ← Parar containers no Windows
+├── iniciar-lab.sh                   ← Lançador para Linux/Ubuntu (Bash)
+├── parar-lab.sh                     ← Parar containers no Linux
 ├── GUIA_PRATICO_DO_ALUNO.txt        ← Guia completo passo a passo para ler no terminal Linux
 ├── REFERENCIA_POWER_SHELL.txt       ← Comandos operacionais úteis para PowerShell
 │
