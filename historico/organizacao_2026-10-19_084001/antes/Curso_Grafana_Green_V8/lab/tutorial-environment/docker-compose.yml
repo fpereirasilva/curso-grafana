@@ -1,0 +1,67 @@
+
+networks:
+  grafana:
+
+volumes:
+  app_data: {}
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.49.0
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+    ports:
+      - 127.0.0.1:39090:9090
+    networks:
+      - grafana
+
+  loki:
+    image: grafana/loki:2.9.0
+    ports:
+      - 127.0.0.1:33100:3100
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - grafana
+
+  promtail:
+    image: grafana/promtail:2.0.0
+    volumes:
+      - app_data:/var/log
+    networks:
+      - grafana
+
+  grafana:
+    image: grafana/grafana:12.0.1
+    ports:
+      - 127.0.0.1:3300:3000
+    networks:
+      - grafana
+    environment:
+      - "GF_DEFAULT_APP_MODE=development"
+      - "GF_LOG_LEVEL=debug"
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin # grants admin role to anonymous access
+      - GF_AUTH_ANONYMOUS_ENABLED=true # removes login 1/2
+      - GF_AUTH_BASIC_ENABLED=false # removes login 2/2
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+
+  app:
+    build: ./app
+    ports:
+      - 127.0.0.1:38081:80
+    volumes:
+      - app_data:/var/log
+    networks:
+      - grafana
+
+  db:
+    image: grafana/tns-db:latest
+    ports:
+      - 127.0.0.1:38082:80
+    networks:
+      - grafana
+
+

@@ -1,0 +1,34 @@
+# =============================================================================
+# Prometheus - configuração de scrape
+# Define quais endpoints o Prometheus raspa (coleta métricas) e de quanto em quanto
+# =============================================================================
+
+global:
+  scrape_interval: 15s      # coleta a cada 15 segundos
+  evaluation_interval: 15s  # reavalia regras a cada 15s
+  scrape_timeout: 10s
+
+# -----------------------------------------------------------------------------
+# Alertas: este arquivo não define regras no Dia 1, mas o bloco precisa existir
+# -----------------------------------------------------------------------------
+rule_files:
+  - "alerts.yml"
+
+# -----------------------------------------------------------------------------
+# Scrape configs: cada "job" define um conjunto de targets a raspar
+# -----------------------------------------------------------------------------
+scrape_configs:
+  # O próprio Prometheus expõe métricas internas
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+        labels:
+          ambiente: "lab"
+
+  # Node Exporter - métricas do host
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+        labels:
+          ambiente: "lab"
+          host: "docker-host"

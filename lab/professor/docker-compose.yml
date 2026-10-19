@@ -1,0 +1,166 @@
+version: '3.8'
+
+networks:
+  obs-net:
+    driver: bridge
+
+volumes:
+  grafana_data:
+  prometheus_data:
+  loki_data:
+  tempo_data:
+
+services:
+  # 1. Grafana Server
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: lab-grafana-prof
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - obs-net
+    depends_on:
+      - prometheus
+      - loki
+      - tempo
+
+  # 2. Prometheus
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    container_name: lab-prometheus-prof
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+    networks:
+      - obs-net
+
+  # 3. Node Exporter
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: lab-node-exporter-prof
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--path.rootfs=/rootfs'
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    networks:
+      - obs-net
+
+  # 4. cAdvisor (Métricas de Containers)
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: lab-cadvisor-prof
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    devices:
+      - /dev/kmsg
+    privileged: true
+    networks:
+      - obs-net
+
+  # 5. Alertmanager
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: lab-alertmanager-prof
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    networks:
+      - obs-net
+
+  # 6. Loki (Logs)
+  loki:
+    image: grafana/loki:3.3.2
+    container_name: lab-loki-prof
+    restart: unless-stopped
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml:ro
+      - loki_data:/tmp/loki
+    networks:
+      - obs-net
+
+  # 7. Promtail (Agente coletor de logs)
+  promtail:
+    image: grafana/promtail:3.3.2
+    container_name: lab-promtail-prof
+    restart: unless-stopped
+    command: -config.file=/etc/promtail/config.yml
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yml:ro
+      - /var/log:/var/log:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - obs-net
+    depends_on:
+      - loki
+
+  # 8. Tempo (Traces Distribuídos / APM)
+  tempo:
+    image: grafana/tempo:2.6.0
+    container_name: lab-tempo-prof
+    restart: unless-stopped
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./tempo-config.yaml:/etc/tempo.yaml:ro
+      - tempo_data:/tmp/tempo
+    ports:
+      - "3200:3200"
+      - "4317:4317"
+      - "4318:4318"
+    networks:
+      - obs-net
+
+  # 9. Aplicação E-Commerce com OpenTelemetry e Gerador de Carga
+  ecommerce-app:
+    build:
+      context: ./app-telemetry
+      dockerfile: Dockerfile
+    container_name: lab-ecommerce-app-prof
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    networks:
+      - obs-net
+    depends_on:
+      - prometheus
+      - tempo
+      - loki

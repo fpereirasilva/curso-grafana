@@ -1,0 +1,234 @@
+================================================================================
+   CURSO GRAFANA: VISUALIZANDO DADOS — GUIA PRÁTICO DO ALUNO (V1)
+   Instrutor: Fabio Silva
+================================================================================
+
+Bem-vindo ao Curso de Grafana e Observabilidade!
+Este arquivo contém todo o roteiro prático para você executar nos 4 dias de aula
+no seu próprio computador ou máquina virtual Ubuntu.
+
+Você poderá praticar usando DUAS abordagens reais de mercado:
+  1. VIA DOCKER COMPOSE (rápido, isolado e padronizado)
+  2. VIA LINUX NATIVO (instalando pacotes apt e gerenciando via systemd)
+
+--------------------------------------------------------------------------------
+SUMÁRIO:
+  1. Pré-requisitos e Preparação do Ambiente no Ubuntu
+  2. DIA 1 — Fundamentos, Navegação e Primeiro Dashboard (Docker)
+  3. DIA 2 — Dashboards Dinâmicos, Variáveis e Alertas (Docker)
+  4. DIA 3 — Instalação Nativa no Linux Ubuntu do Zero (systemd)
+  5. DIA 4 — Multi-Stack: Logs (Loki), Traces (Tempo) e Correlação (Docker)
+  6. Como Importar os Dashboards Prontos no Grafana com 2 Cliques
+--------------------------------------------------------------------------------
+
+================================================================================
+1. PRÉ-REQUISITOS E PREPARAÇÃO NO UBUNTU
+================================================================================
+
+Abra o terminal do seu Ubuntu e rode os comandos abaixo para instalar o Docker
+e utilitários necessários:
+
+# 1.1 Atualizar os pacotes do sistema
+sudo apt update && sudo apt install -y curl apt-transport-https ca-certificates gnupg git htop jq
+
+# 1.2 Instalar o Docker Engine e Docker Compose oficial
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg --yes
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt update
+sudo apt install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
+sudo usermod -aG docker $USER
+
+# 1.3 Feche o terminal e abra novamente para aplicar as permissões do Docker.
+# Teste rodando:
+docker run hello-world
+
+
+================================================================================
+2. DIA 1 — FUNDAMENTOS, NAVEGAÇÃO E PRIMEIRO DASHBOARD
+================================================================================
+
+Objetivo: Subir a stack básica (Grafana + Prometheus + Node Exporter), navegar
+na interface, testar queries PromQL e criar seu primeiro painel.
+
+# 2.1 Acesse a pasta do laboratório do Dia 1:
+cd lab/dia1
+
+# 2.2 Suba a stack:
+docker compose up -d
+
+# 2.3 Confira se os containers estão rodando (Status: Up):
+docker compose ps
+
+# 2.4 Abra no seu navegador:
+URL:     http://localhost:3000
+Usuário: admin
+Senha:   admin  (defina sua nova senha quando solicitado)
+
+# 2.5 Validar o Data Source Prometheus:
+- Vá em Connections > Data sources.
+- Clique em 'Prometheus' e clique no botão 'Save & test' no final da tela.
+- Mensagem esperada: 'datasource is working. 1 data source found'.
+
+# 2.6 Explorar o Dashboard Provisionado:
+- Clique em Dashboards no menu lateral esquerdo.
+- Abra o dashboard '01 - Visão geral do host'.
+- Veja os painéis de CPU, Memória, Disco e Uptime.
+
+# 2.7 Praticar PromQL no menu Explore (Bússola lateral):
+- Selecione o datasource Prometheus e teste as consultas:
+  node_cpu_seconds_total
+  rate(node_cpu_seconds_total{mode="idle"}[1m])
+  100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100)
+
+# 2.8 Ao terminar o Dia 1, pare a stack:
+docker compose down
+
+
+================================================================================
+3. DIA 2 — DASHBOARDS DINÂMICOS, VARIÁVEIS E ALERTAS
+================================================================================
+
+Objetivo: Criar variáveis de template ($host), configurar regras de alerta e
+monitorar containers Docker com o cAdvisor.
+
+# 3.1 Acesse a pasta do Dia 2:
+cd lab/dia2
+
+# 3.2 Suba a stack do Dia 2:
+docker compose up -d
+
+# 3.3 Acesse no navegador:
+URL: http://localhost:3000  (ou http://localhost:3001 conforme porta do lab)
+
+# 3.4 Explorar Dashboards Dinâmicos com Variáveis:
+- Abra o dashboard '02 - Host dinâmico (variáveis)'.
+- No topo, selecione a variável de host no dropdown e veja todos os painéis atualizarem.
+
+# 3.5 Monitoramento de Containers (cAdvisor):
+- Abra o dashboard '03 - Containers (cAdvisor)'.
+- Veja o consumo de CPU e RAM por container Docker.
+
+# 3.6 Forçar Alerta de CPU Alta (Exercício Prático):
+No seu terminal, force uma carga de CPU para disparar o alerta:
+docker exec -it lab-node-exporter sh -c 'dd if=/dev/urandom of=/dev/null bs=1M count=100000 &'
+
+Aguarde cerca de 2 a 3 minutos e acesse:
+http://localhost:9090/alerts  (você verá o alerta HostCPUAlta em estado FIRING em vermelho!)
+
+Para cancelar a carga de teste:
+docker exec -it lab-node-exporter pkill dd
+
+# 3.7 Encerrar o Dia 2:
+docker compose down
+
+
+================================================================================
+4. DIA 3 — INSTALAÇÃO NATIVA NO LINUX UBUNTU (SYSTEMD)
+================================================================================
+
+Objetivo: O aluno aprende a instalar o Grafana, o Prometheus e o Node Exporter
+diretamente no Linux, gerenciando como serviços reais de produção com systemd.
+
+# 4.1 Acesse a pasta dos scripts do Dia 3:
+cd lab/dia3
+ls -la
+
+Você verá 6 scripts organizados sequencialmente:
+  01-prepare.sh             -> Instala dependências e prepara usuários/firewall
+  02-install-grafana.sh     -> Adiciona repositório oficial da Grafana Labs e instala
+  03-configure.sh           -> Configura grafana.ini e inicia o serviço systemd
+  04-install-prometheus.sh  -> Baixa binário oficial e configura prometheus.service
+  05-install-node-exporter.sh -> Instala o node_exporter.service no systemd
+  06-validate.sh            -> Valida portas, status dos serviços e healthchecks
+
+# 4.2 Execute cada script com permissão de sudo na ordem:
+sudo bash 01-prepare.sh
+sudo bash 02-install-grafana.sh
+sudo bash 03-configure.sh
+sudo bash 04-install-prometheus.sh
+sudo bash 05-install-node-exporter.sh
+sudo bash 06-validate.sh
+
+O script 06-validate.sh deve imprimir [OK] em todas as checagens!
+
+# 4.3 Comandos úteis do dia a dia no Linux:
+sudo systemctl status grafana-server
+sudo systemctl status prometheus
+sudo systemctl status node_exporter
+
+# 4.4 Exercício 3.7 (Customizar Porta do Grafana para 3500):
+sudo sed -i 's/^http_port = 3000/http_port = 3500/' /etc/grafana/grafana.ini
+sudo systemctl restart grafana-server
+
+Teste acessando: http://localhost:3500
+
+Para restaurar para a porta padrão 3000:
+sudo sed -i 's/^http_port = 3500/http_port = 3000/' /etc/grafana/grafana.ini
+sudo systemctl restart grafana-server
+
+# DICA: Quando for para o Dia 4, pare os serviços nativos para liberar as portas:
+sudo systemctl stop grafana-server prometheus node_exporter
+
+
+================================================================================
+5. DIA 4 — MULTI-STACK: LOGS (LOKI) E TRACES (TEMPO)
+================================================================================
+
+Objetivo: Praticar a 'Santíssima Trindade da Observabilidade': Métricas, Logs e Traces
+conectados via TraceID.
+
+# 5.1 Acesse o laboratório do Dia 4:
+cd lab/dia4
+
+# 5.2 Suba a stack completa com aplicação simulada de E-commerce:
+docker compose up -d
+
+# 5.3 Acesse no navegador:
+URL: http://localhost:3000  (admin / admin)
+
+# 5.4 O que você vai encontrar pronto:
+- Data source 'Loki' (Logs) pré-configurado
+- Data source 'Tempo' (Traces) pré-configurado com Derived Fields
+- Aplicação de Loja Virtual gerando transações contínuas e erros controlados no gateway
+
+# 5.5 Exercício Prático de Linha de Comando (Injetar Logs Manuais no Ubuntu):
+No seu terminal Linux, injete logs simulados:
+
+# Injetar log de sucesso:
+logger -t minha-loja -p local0.info '{"app": "loja", "status": 200, "msg": "Cliente realizou compra com sucesso"}'
+
+# Injetar log de falha com TraceID:
+logger -t minha-loja -p local0.err '{"app": "loja", "status": 500, "trace_id": "9876543210abcdef9876543210abcdef", "msg": "Timeout no processamento de pagamento"}'
+
+# 5.6 A MÁGICA: Navegar de Logs para Traces com 1 Clique (Explore):
+1. No Grafana, clique no menu lateral Explore (bússola).
+2. Selecione o data source 'Loki'.
+3. Execute a busca LogQL:
+   {job="docker-containers"} |= "ERROR"
+4. Clique em qualquer linha vermelha de erro para expandir.
+5. Veja o campo 'trace_id': clique no botão azul ao lado dele!
+6. O Grafana divide a tela e abre o Trace no Tempo, mostrando a cascata com os tempos de cada função e a falha do gateway de pagamento!
+
+
+================================================================================
+6. COMO IMPORTAR OS DASHBOARDS PRONTOS NO GRAFANA (2 CLIQUES)
+================================================================================
+
+Na pasta 'lab/dashboards-prontos-importacao' você encontra todos os dashboards oficiais:
+  - 01-visao-geral-host.json       -> Métricas do Host (CPU, Memória, Disco)
+  - 02-host-dinamico.json          -> Métricas com Variáveis ($host)
+  - 03-containers.json             -> Métricas de Containers (cAdvisor)
+  - 04-central-logs-loki.json      -> Central de Logs com Loki
+  - 05-ecommerce-apm-traces.json   -> Métricas de Negócio e Traces
+
+Para importar qualquer um deles:
+1. Acesse seu Grafana (http://localhost:3000).
+2. No menu lateral, clique em 'Dashboards' (quatro quadradinhos).
+3. No topo direito, clique em 'New' > 'Import'.
+4. Clique no botão azul 'Upload dashboard JSON file' e selecione o arquivo desejado.
+5. Selecione seu datasource (Prometheus ou Loki) e clique em 'Import'.
+Pronto! Seu painel abre imediatamente com gráficos e indicadores em tempo real.
+
+================================================================================
+Bons estudos e aproveite o curso! 🚀
+================================================================================

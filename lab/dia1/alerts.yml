@@ -1,0 +1,8 @@
+# =============================================================================
+# Prometheus - regras de alerta
+# Vazio no Dia 1 (alertas são explorados no Dia 4 do curso)
+# Apenas mantemos o arquivo para evitar erro de carregamento
+# =============================================================================
+groups:
+  - name: vazio
+    rules: []

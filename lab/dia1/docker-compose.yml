@@ -1,0 +1,95 @@
+# =============================================================================
+# Lab Dia 1 - Introdução ao Grafana
+# Stack: Grafana 11 + Prometheus + Node Exporter
+# Objetivo: o aluno roda este compose, abre o Grafana em http://localhost:3000
+#           e pratica navegação, criação de painéis e queries PromQL básicas.
+#
+# Credenciais padrão:
+#   user: admin
+#   pass: admin  (o Grafana pede para trocar no primeiro login)
+#
+# Subir:    docker compose up -d
+# Derrubar: docker compose down -v   (o -v apaga volumes - usar só se quiser zerar)
+# Logs:     docker compose logs -f grafana
+# =============================================================================
+
+services:
+  # -----------------------------------------------------------------------------
+  # Prometheus - banco de séries temporais
+  # Porta 9090 - UI web em http://localhost:9090
+  # O Prometheus coleta métricas dos "targets" definidos em prometheus.yml
+  # -----------------------------------------------------------------------------
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    container_name: lab-prometheus
+    restart: unless-stopped
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=7d"
+      # Habilitar endpoint de admin (recarregar config sem reiniciar)
+      - "--web.enable-lifecycle"
+    networks:
+      - lab-net
+
+  # -----------------------------------------------------------------------------
+  # Node Exporter - exporta métricas do HOST (CPU, memória, disco, rede)
+  # Porta 9100 - métricas em http://localhost:9100/metrics
+  # O Prometheus raspa esse endpoint a cada 15s
+  # -----------------------------------------------------------------------------
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: lab-node-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+    networks:
+      - lab-net
+
+  # -----------------------------------------------------------------------------
+  # Grafana - interface visual
+  # Porta 3000 - UI web em http://localhost:3000
+  # Provisiona o Prometheus como datasource automaticamente (datasource.yml)
+  # Provisiona dashboards de exemplo (dashboards.yml + dashboards/)
+  # -----------------------------------------------------------------------------
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: lab-grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:

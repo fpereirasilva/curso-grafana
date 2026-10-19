@@ -1,0 +1,18 @@
+# =============================================================================
+# Grafana - provisionamento de Data Source
+# Quando o Grafana sobe, ele cria automaticamente o datasource do Prometheus
+# sem precisar configurar pela UI.
+# =============================================================================
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    # Endpoint interno do Prometheus na rede do docker compose
+    url: http://prometheus:9090
+    isDefault: true
+    editable: true
+    jsonData:
+      timeInterval: "15s"
+      httpMethod: POST

@@ -1,0 +1,118 @@
+services:
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    container_name: lab-prometheus
+    restart: unless-stopped
+    ports:
+      - "9091:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--storage.tsdb.retention.time=7d"
+      - "--web.enable-lifecycle"
+    networks:
+      - lab-net
+
+  node-exporter:
+    image: prom/node-exporter:v1.8.2
+    container_name: lab-node-exporter
+    restart: unless-stopped
+    ports:
+      - "9100:9100"
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - "--path.procfs=/host/proc"
+      - "--path.sysfs=/host/sys"
+      - "--path.rootfs=/rootfs"
+      - "--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)"
+    networks:
+      - lab-net
+
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.49.1
+    container_name: lab-cadvisor
+    restart: unless-stopped
+    ports:
+      - "8082:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
+    networks:
+      - lab-net
+
+  alertmanager:
+    image: prom/alertmanager:v0.27.0
+    container_name: lab-alertmanager
+    restart: unless-stopped
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    networks:
+      - lab-net
+
+  web-app-demo:
+    image: nginx:alpine
+    container_name: lab-webapp-demo
+    restart: unless-stopped
+    ports:
+      - "8088:80"
+    networks:
+      - lab-net
+
+  traffic-generator:
+    image: alpine:latest
+    container_name: lab-traffic-generator
+    restart: unless-stopped
+    command: >
+      sh -c "while true; do
+        wget -q -O /dev/null http://web-app-demo/ || true;
+        wget -q -O /dev/null http://prometheus:9090/metrics || true;
+        sleep 0.5;
+      done"
+    depends_on:
+      - web-app-demo
+      - prometheus
+    networks:
+      - lab-net
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: lab-grafana
+    restart: unless-stopped
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_SMTP_ENABLED=false
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/provisioning/alerting:/etc/grafana/provisioning/alerting:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - prometheus
+      - alertmanager
+    networks:
+      - lab-net
+
+networks:
+  lab-net:
+    driver: bridge
+
+volumes:
+  prometheus_data:
+  grafana_data:

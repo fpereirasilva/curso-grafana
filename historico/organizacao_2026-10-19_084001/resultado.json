@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-19T08:40:27.6475414-03:00",
+  "target": "E:\\01_Projetos\\Curso Grafana",
+  "history": "E:\\01_Projetos\\Curso Grafana\\historico\\organizacao_2026-10-19_084001",
+  "current_files": 145,
+  "navigation_files": 9,
+  "archived_files": 32,
+  "protected_files": 587,
+  "protected_files_unchanged": true,
+  "divergences": [],
+  "git_index_unchanged": true,
+  "moves": [
+    {
+      "from": "_orig-capa.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_orig-capa.jpg",
+      "sha256": "8915051AAA5D28247A6D0F398BD23ACA24A5794118CFDDDD8C061775E62D1277"
+    },
+    {
+      "from": "_orig-conteudo.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_orig-conteudo.jpg",
+      "sha256": "68D7A16EA5F16E9D0577EB5EB113F02903EE8EA44616ED12A698753F89621A38"
+    },
+    {
+      "from": "_orig-divisor.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_orig-divisor.jpg",
+      "sha256": "6AF8F618836F46A77EC10D77D1481DF41C77A9E69C5EB6257CEDFFBE775C21E4"
+    },
+    {
+      "from": "_orig-slide2.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_orig-slide2.jpg",
+      "sha256": "BA95EC2DF5FBB0792ABE079C2BCAA99A8538301D8D094D07CB047B3DC35FE5CC"
+    },
+    {
+      "from": "_qa-capa-nova.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-capa-nova.jpg",
+      "sha256": "14E7177A75C71AC45EA024651C9EA098524ED350324AC776C81E15B46DCDE837"
+    },
+    {
+      "from": "_qa-comparativo.html",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-comparativo.html",
+      "sha256": "C86A548DA5BCD0669728E80F831CDAFDF7D6CADCE6AB23E501E8333958E4297A"
+    },
+    {
+      "from": "_qa-conteudo-obs.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-conteudo-obs.jpg",
+      "sha256": "1A5BB3258F93A3BDD9F4EFEBA89B7EE1C481AFDC83AACBECBF7236D3C6143633"
+    },
+    {
+      "from": "_qa-divisor-N1.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-divisor-N1.jpg",
+      "sha256": "903E76C129E34313240D531BB610600DFF7076542242579272A1F69DEF17132C"
+    },
+    {
+      "from": "_qa-divisor-N4.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-divisor-N4.jpg",
+      "sha256": "D5500393507F8B1A77FD2D3C0447CBCC025CE70A43065A78FEF6B1A0003B158A"
+    },
+    {
+      "from": "_qa-novo-capa-small.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-novo-capa-small.png",
+      "sha256": "7D52FDF4B72C04FC0C2659F80766423274E6D99328443AB746858D67632DD1A0"
+    },
+    {
+      "from": "_qa-novo-conteudo-small.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-novo-conteudo-small.png",
+      "sha256": "62C21C83CA4448184D57B7B1362068329F8D5E3E366C57B135584A898AA45051"
+    },
+    {
+      "from": "_qa-novo-divisor-small.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-novo-divisor-small.png",
+      "sha256": "5AD7D25475829AB27649AF5ADF66AD279A748BD57AA1C58AE0974C75FD9953D0"
+    },
+    {
+      "from": "_qa-orig-capa-small.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-orig-capa-small.png",
+      "sha256": "FEED4AA886437C3C85E787C980042B1C4305A25D13A379E0DD2A38F628C99AFC"
+    },
+    {
+      "from": "_qa-orig-conteudo-small.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-orig-conteudo-small.png",
+      "sha256": "620BD0696DCF381ED9DE9139CD9834A100495EB218F13E4B5F27DD011BD849D4"
+    },
+    {
+      "from": "_qa-orig-divisor-small.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-orig-divisor-small.png",
+      "sha256": "6B577400DE5CAAA74D8605DBC5A2C11CC63D577BB8F1B904FE4EC821E71FEC71"
+    },
+    {
+      "from": "_qa-test-capa.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-test-capa.jpg",
+      "sha256": "1F7469D8CF005D3812F59C935DB906FB2046DFB5CDF5B4F5AD890CBA126BC10F"
+    },
+    {
+      "from": "_qa-test-capa.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-test-capa.png",
+      "sha256": "A87F4E324F5E81C5630C2FC487FCC71F0CB3768A98626220AE722D829CB4FA35"
+    },
+    {
+      "from": "_qa-test-conteudo.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-test-conteudo.jpg",
+      "sha256": "57FA1F1D40D1DF6B679491151F8873A40FE810AC56AFB752E9E154505FDF08B3"
+    },
+    {
+      "from": "_qa-test-conteudo.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-test-conteudo.png",
+      "sha256": "667E954D5253F474DCAB0D55BB2DA804E20B682925065A114CAEB5B196EC97D4"
+    },
+    {
+      "from": "_qa-test-divisor.jpg",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-test-divisor.jpg",
+      "sha256": "27BF469245DE38D26324FDF59FA8F2491C81BEB594219057C254F70AA052E488"
+    },
+    {
+      "from": "_qa-test-divisor.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-test-divisor.png",
+      "sha256": "77BFE24EC7FED52BF45892BB5201FCE4DB6C6C3C8F7AE11FF5A2E25F66142FF0"
+    },
+    {
+      "from": "_qa-test.html",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-test.html",
+      "sha256": "29A051C21A8587B9184BBB566E32EDE27B1A67A773C68434705C2123AC956075"
+    },
+    {
+      "from": "_qa-v2.html",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-v2.html",
+      "sha256": "EBB5E3B8DD2B07DA6448CFA926A8408B8AC10B0A4A95989924924A9CB5F9BC6A"
+    },
+    {
+      "from": "_qa-v3.html",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-v3.html",
+      "sha256": "5D2BE43F24ED5F0D8EFD617427B9FA346DE9A0668856D6E65E4AC0C0711CAAB5"
+    },
+    {
+      "from": "_qa-v4.html",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_qa-v4.html",
+      "sha256": "0CC106CCE92792C3E2A5F14FDFB66D05E5ACC448F97B8CC5EB13ECA54C5A57A7"
+    },
+    {
+      "from": "_test-tiny.png",
+      "to": "historico/organizacao_2026-10-19_084001/qa/_test-tiny.png",
+      "sha256": "57D5D1D1A87299171D00FDB2441C07EBB2B56B0D5C3046123961621F53C35B73"
+    },
+    {
+      "from": "curso grafana.zip",
+      "to": "historico/organizacao_2026-10-19_084001/zips/curso grafana.zip",
+      "sha256": "2C34C6A4EFB73458214B126214234C0656600A54083F916101592363E879E421"
+    },
+    {
+      "from": "Curso_Grafana_V1_pacote_completo.zip",
+      "to": "historico/organizacao_2026-10-19_084001/zips/Curso_Grafana_V1_pacote_completo.zip",
+      "sha256": "B3EF10B65C5F070A09182DC1A090275421872B5979C74394AA9867E055ECD611"
+    },
+    {
+      "from": "Curso_Grafana_Laboratorios_Alunos.zip",
+      "to": "historico/organizacao_2026-10-19_084001/zips/Curso_Grafana_Laboratorios_Alunos.zip",
+      "sha256": "4870566DA7583D7C89BD6515E5362BCD32EF90D428DE28ACCF6B85D347DC8416"
+    },
+    {
+      "from": "Curso_Grafana_Green_Pacote_V8.zip",
+      "to": "historico/organizacao_2026-10-19_084001/zips/Curso_Grafana_Green_Pacote_V8.zip",
+      "sha256": "CAB2C3D37DD7DB5ED66A743ADAC21FE966B79C090AD8D24C55DD261FCE0373F6"
+    },
+    {
+      "from": "Curso_Grafana_Green_V8/Curso_Grafana_Green_5_Noites_V7.pptx",
+      "to": "historico/organizacao_2026-10-19_084001/retirados/Curso_Grafana_Green_5_Noites_V7.pptx",
+      "sha256": "5FF2337D9E8D928BD716DC2B0DA7655AE7B6320D6A1D05CD3FF2EB748D7E6109"
+    },
+    {
+      "from": "Curso_Grafana_Green_V8/Previa_Curso_Grafana_Green_V7.html",
+      "to": "historico/organizacao_2026-10-19_084001/retirados/Previa_Curso_Grafana_Green_V7.html",
+      "sha256": "C309FE9C5AF108CD9A41319006F8AB2C3421C0B483EAF9D96464A5B5C805C5D0"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+groups:
+  - name: host_e_servicos
+    rules:
+      - alert: DemonstracaoAlertaAtivo
+        expr: vector(1)
+        for: 10s
+        labels:
+          severity: info
+          ambiente: curso-grafana-fabiosilva
+        annotations:
+          summary: "[CURSO] Alerta de Demonstracao Ativo"
+          description: "Este alerta e gerado para demonstrar o ciclo de vida de alertas (Firing, Pending, Silenced) aos alunos."
+
+      - alert: HostCPUAlta
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 70
+        for: 30s
+        labels:
+          severity: warning
+          ambiente: homelab
+        annotations:
+          summary: "CPU alta detectada em {{ $labels.instance }}"
+          description: "Uso de CPU acima de 70%"
+
+      - alert: HostMemoriaAlta
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 60
+        for: 30s
+        labels:
+          severity: warning
+          ambiente: proxmox-k8s
+        annotations:
+          summary: "Consumo de memoria em {{ $labels.instance }}"
+          description: "Memoria acima de 60%"
+
+      - alert: HostDown
+        expr: up == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Servico {{ $labels.job }} indisponivel"
+          description: "O endpoint {{ $labels.instance }} nao responde."

@@ -1,0 +1,59 @@
+CURSO GRAFANA — GREEN TECNOLOGIA — V8
+Instrutor: Fábio Silva, Arquiteto de Soluções
+5 noites · 18h30 às 22h30 · 20 horas de programação
+Intervalo diário: 20h20 às 20h45
+
+COMECE AQUI
+Abra 00_COMECE_AQUI.html no navegador. Use os materiais dentro de Curso_Grafana_Green_V8.
+
+HORÁRIO EM TODAS AS NOITES
+18h30–19h55  Teoria (85 minutos)
+19h55–20h20  Demonstração do professor (25 minutos)
+20h20–20h45  Intervalo (25 minutos)
+20h45–21h00  Exercícios comentados (15 minutos)
+21h00–22h15  Prática do aluno (75 minutos)
+22h15–22h30  Correção e fechamento (15 minutos)
+As 20 horas incluem os intervalos: 17h55 de atividades e 2h05 de intervalos.
+
+ANTES DE COMEÇAR
+1. Extraia o pacote completo e mantenha suas subpastas juntas.
+2. Abra e aguarde a inicialização do Docker Desktop ou Docker Engine.
+3. No PowerShell desta pasta, execute .\iniciar-lab-alunos.ps1.
+4. Aguarde os downloads e a inicialização dos serviços.
+5. Abra http://localhost:3300 no navegador para acessar o Grafana.
+   Aplicação: http://localhost:38081
+   Receptor didático de Webhook: http://localhost:38090
+
+PASSO A PASSO COM PRINTS
+Curso_Grafana_Green_V8/alunos/Guia_Visual_Exercicios_V8.html
+Curso_Grafana_Green_V8/Guia_Visual_Exercicios_V8.pdf
+Clique nas imagens do guia HTML para ampliar.
+
+EXERCÍCIOS DAS CINCO NOITES
+Noite 1: Curso_Grafana_Green_V8/alunos/Aluno_Noite_1.pdf
+Noite 2: Curso_Grafana_Green_V8/alunos/Aluno_Noite_2.pdf
+Noite 3: Curso_Grafana_Green_V8/alunos/Aluno_Noite_3.pdf
+Noite 4: Curso_Grafana_Green_V8/alunos/Aluno_Noite_4.pdf
+Noite 5: Curso_Grafana_Green_V8/alunos/Aluno_Noite_5.pdf
+Os arquivos Markdown de cada noite ficam na mesma pasta.
+
+EXEMPLOS PRONTOS, OPCIONAIS
+Há arquivos para importação e consulta em Curso_Grafana_Green_V8/exemplos-importaveis/.
+Leia o README.md dessa pasta para identificar o ambiente, o formato e os pré-requisitos.
+Eles ficam separados dos exercícios manuais e podem ajudar na comparação dos resultados.
+A importação de um dashboard não importa os dados históricos nem configura automaticamente
+fontes de dados, regras, contatos ou anotações manuais. Siga a orientação de cada exemplo.
+
+APOSTILA E ARQUITETURA
+Curso_Grafana_Green_V8/Apostila_do_Aluno_V8.pdf
+Curso_Grafana_Green_V8/arquitetura/Arquitetura_Grafana_Green.drawio
+
+SE ALGO NÃO APARECER
+Confira se o Docker está ativo, se os containers terminaram de iniciar, se você abriu
+a porta 3300 e se escolheu a fonte de dados indicada no guia. Gere o tráfego solicitado
+pelo exercício e ajuste o intervalo de tempo. Consulte a seção de diagnóstico do guia.
+
+PASTAS ANTIGAS
+lab/dia1 até lab/dia4 e os PDFs em docs pertencem à estrutura anterior do curso.
+Use a pasta V8 para acompanhar as cinco noites atuais. O ambiente do professor fica
+separado em lab/professor; não é necessário executá-lo para seguir o laboratório do aluno.

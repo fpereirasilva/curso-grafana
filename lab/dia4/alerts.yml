@@ -1,0 +1,26 @@
+groups:
+  - name: AlertasProfessor
+    rules:
+      - alert: HostCPUAlta
+        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[1m])) * 100) > 85
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "CPU do host acima de 85%"
+
+      - alert: AltaTaxaDeErrosHTTP
+        expr: sum(rate(http_requests_total{status=~"5.."}[1m])) / sum(rate(http_requests_total[1m])) * 100 > 5
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "Taxa de erro HTTP 5xx superior a 5% na loja virtual"
+
+      - alert: DemonstracaoAlertaAtivo
+        expr: vector(1)
+        for: 10s
+        labels:
+          severity: info
+        annotations:
+          summary: "Alerta de teste sempre ativo para demonstracao em aula"

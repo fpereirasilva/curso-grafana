@@ -1,0 +1,17 @@
+# =============================================================================
+# Grafana - provisionamento de Dashboards
+# Indica ao Grafana para carregar todos os .json da pasta /var/lib/grafana/dashboards
+# =============================================================================
+apiVersion: 1
+
+providers:
+  - name: "lab-dashboards"
+    orgId: 1
+    folder: "Laboratório"
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 30
+    allowUiUpdates: true
+    options:
+      path: /var/lib/grafana/dashboards
+      foldersFromFilesStructure: false

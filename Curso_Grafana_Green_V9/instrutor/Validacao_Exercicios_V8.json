@@ -1,0 +1,40 @@
+{
+  "pdf_pages": {
+    "Guia_Visual_Exercicios_V8.pdf": 56,
+    "Apostila_do_Aluno_V8.pdf": 109,
+    "Aluno_Noite_1.pdf": 9,
+    "Aluno_Noite_2.pdf": 7,
+    "Aluno_Noite_3.pdf": 9,
+    "Aluno_Noite_4.pdf": 12,
+    "Aluno_Noite_5.pdf": 16
+  },
+  "source_screenshots": 50,
+  "required_exercises": 15,
+  "instruction_steps": 231,
+  "practice_minutes_per_night": 75,
+  "html_links": "all local references exist",
+  "json_imports": "base and complete validated in Grafana 12.0.1 UI",
+  "local_alert": "Firing and delivery confirmed; paused after captures",
+  "evidence": {
+    "grafana": "12.0.1",
+    "url": "http://localhost:3300",
+    "app": "http://localhost:38081",
+    "webhook": "http://localhost:38090",
+    "manual": "/d/ea00a3de-831c-47b4-813c-96c66096a6ee",
+    "base": "/d/35192417-6e56-4038-952e-83f82afdcda1",
+    "completo": "/d/29549aa9-2c2a-4c5c-b805-428f62771c74",
+    "regra": "/alerting/grafana/eg1nt2cyi9iiob/view",
+    "regraPausada": true,
+    "notificacoesLocais": 2,
+    "regraValorB": 0.05084642346257364,
+    "limite": 0.01
+  },
+  "guide_cards": 43,
+  "images_used_in_exercise_html": 41,
+  "importable_dashboards": 15,
+  "optional_alerting_json": 2,
+  "examples_validation": "structural; initial 2 student models previously imported through UI",
+  "slides": 178,
+  "slide_package_findings": 0,
+  "slide_layout_findings": 0
+}

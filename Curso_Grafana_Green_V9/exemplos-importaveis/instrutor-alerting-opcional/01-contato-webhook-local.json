@@ -1,0 +1,20 @@
+{
+  "apiVersion": 1,
+  "contactPoints": [
+    {
+      "orgId": 1,
+      "name": "Green - Webhook local (modelo opcional)",
+      "receivers": [
+        {
+          "uid": "green-webhook-local-modelo",
+          "type": "webhook",
+          "disableResolveMessage": false,
+          "settings": {
+            "url": "http://webhook:8080/",
+            "httpMethod": "POST"
+          }
+        }
+      ]
+    }
+  ]
+}

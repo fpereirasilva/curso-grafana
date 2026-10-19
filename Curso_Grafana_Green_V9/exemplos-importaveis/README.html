@@ -1,0 +1,79 @@
+<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Exemplos opcionais Grafana</title><style>body{max-width:1120px;margin:40px auto;padding:0 24px;font:17px/1.6 Segoe UI,sans-serif;color:#22351a}h1,h2,h3,a{color:#40760f}table{border-collapse:collapse;width:100%;font-size:15px}td,th{padding:10px;border:1px solid #d2ddc9;text-align:left}code,pre{background:#f0f4eb;white-space:pre-wrap;overflow-wrap:anywhere}a{overflow-wrap:anywhere}</style><pre># Exemplos prontos para importação — material opcional
+
+Os exercícios continuam sendo construídos passo a passo. Estes modelos estão disponíveis para importar, comparar ou recuperar um ponto do laboratório. Não substituem os enunciados e não exigem executar uma atividade extra.
+
+## Modelos do aluno — Grafana News
+
+| Noite | Arquivo | Conteúdo |
+|---|---|---|
+| 4 | [aluno/01-dashboard-base.json](aluno/01-dashboard-base.json) | Green - Grafana News - Modelo base |
+| 4 | [aluno/02-dashboard-completo.json](aluno/02-dashboard-completo.json) | Green - Grafana News - Modelo completo |
+| 2 | [aluno/03-contador-requisicoes.json](aluno/03-contador-requisicoes.json) | Green - 03 - Contador de requisições |
+| 2 | [aluno/04-taxa-por-rota.json](aluno/04-taxa-por-rota.json) | Green - 04 - Taxa por rota |
+| 2 | [aluno/05-taxa-por-status.json](aluno/05-taxa-por-status.json) | Green - 05 - Taxa por status HTTP |
+| 3 | [aluno/06-logs-aplicacao.json](aluno/06-logs-aplicacao.json) | Green - 06 - Logs da aplicação |
+| 3 | [aluno/07-logs-erros.json](aluno/07-logs-erros.json) | Green - 07 - Investigação de erros |
+| 4 | [aluno/08-integrado-metricas-logs-anotacoes.json](aluno/08-integrado-metricas-logs-anotacoes.json) | Green - 08 - Métricas, logs e anotações |
+| 5 | [aluno/09-projeto-final.json](aluno/09-projeto-final.json) | Green - 09 - Projeto final Grafana News |
+
+**Noite 1:** o foco é iniciar e navegar no laboratório. Não existe um objeto Grafana para importar que substitua subir containers, publicar notícias ou votar. Os primeiros modelos de métricas podem ser abertos depois que houver dados.
+
+### Importação dos dashboards
+
+Abra Dashboards &gt; New &gt; Import; escolha Upload dashboard JSON file; selecione um arquivo de `aluno/`; escolha sua pasta; selecione as fontes de dados solicitadas; clique Import. Se o seu menu mostra apenas Import, utilize essa opção. Os campos `id` e `uid` são nulos, e `__inputs` solicita as fontes locais. Um mesmo nome não identifica com segurança uma fonte: selecione a conexão correta.
+
+Os modelos de métricas requerem Prometheus com `tns_request_duration_seconds_count`; os modelos de logs requerem Loki com o rótulo `filename=&quot;/var/log/tns-app.log&quot;`. Gere tráfego e use um intervalo recente; `rate(...[5m])` precisa de ao menos duas amostras. Contador bruto usa contagem; taxa usa req/s. O filtro literal `|= &quot;error&quot;` distingue maiúsculas e minúsculas.
+
+### Projeto final
+
+`09-projeto-final.json` exclui as rotas `metrics` e `/metrics` do tráfego relevante. O modelo possui gráficos por rota e status, cartões de taxa e contagem na janela de cinco minutos, logs de erro e anotações por consulta Loki. Ele não cria um alerta. `increase` e `rate` extrapolam a janela e podem retornar valores fracionários. Uma contagem acumulada é por série e pode reiniciar com o processo; somar instrumentações em mais de um serviço pode contar a passagem da mesma chamada em camadas distintas.
+
+## Demonstrações do professor — stack separada
+
+Os seis JSONs de `professor/` são cópias portáteis dos modelos presentes em `lab/dashboards-prontos-importacao`, destinados à stack Grafana 11.3 do professor. As origens foram preservadas. Os modelos do aluno usam a referência Grafana 12.0.1. Não importe os exemplos do professor selecionando as fontes Grafana News: os nomes das métricas e rótulos são outros.
+
+| Arquivo | Pré-requisitos |
+|---|---|
+| [professor/01-visao-geral-host.json](professor/01-visao-geral-host.json) | Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Node Exporter com métricas node_* e acesso ao host. |
+| [professor/02-host-dinamico.json](professor/02-host-dinamico.json) | Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Node Exporter; a variável host consulta instance. |
+| [professor/03-containers.json](professor/03-containers.json) | Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Exporter de containers que exponha container_cpu_usage_seconds_total e container_memory_usage_bytes com rótulo name. |
+| [professor/04-central-logs-loki.json](professor/04-central-logs-loki.json) | Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Loki com streams job=docker-containers; nível level disponível quando se desejar agrupamento por nível. TraceID exige configuração adicional de derived fields no Loki. |
+| [professor/05-ecommerce-apm-traces.json](professor/05-ecommerce-apm-traces.json) | Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Aplicação e-commerce do professor e séries http_requests_total e http_request_duration_seconds_sum/count com endpoint e status. Não contém painel Tempo: traces são acessados por Explore/derived fields previamente configurados. |
+| [professor/06-dados-publicos-ibge-ssl-terremotos.json](professor/06-dados-publicos-ibge-ssl-terremotos.json) | Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Requer coletor customizado de dados públicos: séries finance_*, iss_*, site_*, ibge_populacao_estado e usgs_earthquake_magnitude. O JSON não instala/exporta os coletores, não consulta APIs públicas diretamente e não comprova dados ao vivo. |
+
+### Ajustes das cópias portáteis
+
+- `professor/01-visao-geral-host.json`: Disco: seletor / e exclusão de fstype=rootfs; ajuste conforme a montagem de seu host. Uptime com unidade segundos.
+- `professor/02-host-dinamico.json`: Título de memória corrigido: a consulta compara hosts, não processos. Rede: rate(bytes)*8 exibido em bits/s. Heatmap renomeado para não sugerir agregação por hora do dia.
+- `professor/04-central-logs-loki.json`: count_over_time mede contagem por janela, não linhas/segundo; título/unidade corrigidos.
+- `professor/05-ecommerce-apm-traces.json`: Removida estatística de legenda p95 para evitar confusão com percentil de requisições. Contagem renomeada: requisições não equivalem necessariamente a pedidos. Indicador renomeado para proporção HTTP 200, sem alegação de SLA.
+- `professor/06-dados-publicos-ibge-ssl-terremotos.json`: Somente portabilidade; nenhuma disponibilidade de dados públicos foi validada nesta entrega.
+
+O mapeamento Prometheus/Loki/Tempo é criado conforme as referências efetivamente presentes no JSON, inclusive em variáveis, targets e consultas de anotações. Nenhum dos seis arquivos originais contém um painel que consulte Tempo. Importar o modelo 05 não configura instrumentação, uma fonte Tempo nem os derived fields de Loki.
+
+**Dados públicos (06):** disponibilidade e atualidade não foram verificadas; a presença do arquivo não comprova séries ao vivo. Se o coletor correspondente não estiver instalado e coletado, No data é esperado.
+
+## O que um dashboard JSON importa
+
+| Tipo de recurso | Incluído no dashboard? |
+|---|---|
+| Painéis, queries, layout, unidades e variáveis | Sim |
+| Consulta de anotações Loki | Sim, mas os eventos dependem dos logs existentes |
+| Eventos de anotação criados manualmente | Não: ficam no banco Grafana, não são transportados por este JSON |
+| Métricas, logs, traces e histórico | Não: permanecem nos respectivos backends |
+| Conexões e configurações de fontes (incluindo derived fields) | Não: devem existir antes |
+| Grafana-managed alert rule, contato Webhook ou SMTP | Não |
+
+## Noite 5 — modelos técnicos separados
+
+Há um [contato Webhook local e uma regra pausada](instrutor-alerting-opcional/LEIA-ME.md) para consulta do instrutor. São JSONs de provisionamento de alerting; não passam pela tela Import dos dashboards. Não são montados nem aplicados automaticamente. Não há e-mail, credenciais ou testes de notificação nesta entrega.
+
+## Validação e referências
+
+Foi executada validação estrutural local dos 15 dashboards: JSON bem formado, IDs de painel únicos, grades dentro de 24 colunas, fontes mapeadas e queries presentes. Os dois modelos iniciais derivam dos arquivos V8 já existentes; os sete novos modelos e as seis conversões não receberam nova importação no navegador nesta etapa. Não houve acesso a servidores nem mudanças no Grafana.
+
+- [Tutorial base: Grafana fundamentals](https://grafana.com/tutorials/grafana-fundamentals/)
+- [Importar dashboards](https://grafana.com/docs/grafana/latest/dashboards/build-dashboards/import-dashboards/)
+- [Anotações](https://grafana.com/docs/grafana/latest/dashboards/annotations/)
+- [Catálogo técnico e resultados de validação](validacao.json)
+</pre></html>

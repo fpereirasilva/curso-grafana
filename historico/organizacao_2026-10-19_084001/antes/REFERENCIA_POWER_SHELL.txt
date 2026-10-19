@@ -1,0 +1,315 @@
+================================================================================
+  CURSO GRAFANA - REFERÊNCIA COMPLETA PARA EXECUÇÃO VIA POWERSHELL
+  Instrutor: Fabio Silva
+  Período: 4 noites (18:30 às 22:30) - Total: 16h
+================================================================================
+
+DIRETÓRIO BASE
+--------------
+E:\01_Projetos\Curso Grafana\
+
+================================================================================
+1. O QUE FOI ENTREGUE ATÉ AGORA (V1)
+================================================================================
+
+Material didático completo em: E:\01_Projetos\Curso Grafana\
+
+├── docs/
+│   ├── Grafana_Visualizando_Dados_V1.pptx          (62 slides - PPTX do instrutor)
+│   ├── Grafana_Visualizando_Dados_V1.pdf           (PDF base)
+│   ├── Grafana_Visualizando_Dados_V1_aluno.pdf     (PDF aluno - com marca d'água)
+│   ├── Grafana_Visualizando_Dados_V1_instrutor.pdf (PDF instrutor - limpo)
+│   ├── caderno-exercicios.pdf                      (Caderno com 14 páginas + gabarito)
+│   ├── caderno-exercicios.md                       (fonte markdown)
+│   ├── build_pptx.js / build_pptx_part2.js / build_pptx_part3.js
+│   ├── generate_pptx.js                            (orquestrador do PPTX)
+│   ├── build_caderno_pdf.py                        (gerador do caderno)
+│   └── build_aluno_pdf.py                          (gera versões aluno/instrutor)
+│
+├── lab/
+│   ├── dia1/                                       (stack mínimo p/ dia 1)
+│   │   ├── docker-compose.yml                      (Grafana + Prometheus + Node Exporter)
+│   │   ├── prometheus.yml
+│   │   └── grafana/
+│   │       ├── provisioning/datasources/prometheus.yml
+│   │       ├── provisioning/dashboards/dashboards.yml
+│   │       └── dashboards/01-visao-geral-host.json (6 painéis)
+│   │
+│   ├── dia2/                                       (stack completo p/ dia 2)
+│   │   ├── docker-compose.yml                      (+ cAdvisor + Alertmanager)
+│   │   ├── alertmanager.yml
+│   │   ├── prometheus.yml
+│   │   └── grafana/
+│   │       ├── provisioning/
+│   │       │   ├── datasources/prometheus.yml
+│   │       │   ├── dashboards/dashboards.yml
+│   │       │   └── alerting/rules.yml
+│   │       └── dashboards/
+│   │           ├── 01-visao-geral-host.json
+│   │           └── 02-host-dinamico.json           (com variável $host)
+│   │
+│   └── dia3/                                       (scripts de instalação Ubuntu)
+│       ├── 01-prepare.sh                           (atualiza sistema, deps)
+│       ├── 02-install-grafana.sh                   (instala via APT oficial)
+│       ├── 03-configure.sh                         (configura datasource, dashboards)
+│       ├── 04-install-prometheus.sh                (instala Prometheus)
+│       ├── 05-install-node-exporter.sh             (instala exporter)
+│       └── 06-validate.sh                          (smoke tests)
+│
+├── scripts/                                        (PIPELINE DE AUTOMAÇÃO)
+│   ├── setup-e-capturar.ps1                        (pipeline Windows)
+│   ├── setup-e-capturar.sh                         (pipeline WSL/Linux)
+│   ├── apply_brand.py                              (aplica logo + cores da escola)
+│   ├── capture_grafana_screenshots.py              (captura 21 telas via Playwright)
+│   ├── generate_pptx_with_screenshots.js           (regenera PPTX com imagens)
+│   └── README.md                                   (instruções detalhadas)
+│
+├── assets/
+│   ├── logo/
+│   │   └── logo.png                                (← VOCÊ COLOCA AQUI)
+│   ├── palette.example.json                        (modelo de paleta)
+│   ├── palette.json                                (← VOCÊ COLOCA AQUI)
+│   ├── grafana-custom.css                          (gerado automaticamente)
+│   └── screenshots/                                (geradas automaticamente)
+│
+└── README.md                                       (guia de navegação)
+
+================================================================================
+2. CONFIGURAR IDENTIDADE VISUAL DA ESCOLA (1x SÓ)
+================================================================================
+
+Crie estes dois arquivos:
+
+A) E:\01_Projetos\Curso Grafana\assets\logo\logo.png
+   - Seu logo (ideal: PNG com fundo transparente, máx 500px de largura)
+
+B) E:\01_Projetos\Curso Grafana\assets\palette.json
+   - Copie de palette.example.json e ajuste as cores:
+
+   Exemplo (azul + laranja + verde):
+   {
+     "primary": "0B3D91",       ← cor principal (botões, links)
+     "secondary": "F46800",     ← cor secundária (hover, detalhes)
+     "accent": "10B981",        ← cor de destaque (sucesso, OK)
+     "background": "FFFFFF",    ← fundo
+     "text": "1F2937"           ← texto principal
+   }
+
+   Use a paleta da sua escola. Cores em HEX sem o "#".
+
+================================================================================
+3. EXECUTAR O PIPELINE COMPLETO (gera o PPTX com screenshots reais)
+================================================================================
+
+Abra o PowerShell como administrador e rode:
+
+   cd E:\01_Projetos\"Curso Grafana"
+   .\scripts\setup-e-capturar.ps1
+
+O QUE O SCRIPT FAZ (em ordem, leva ~10-15 min na primeira vez):
+   1. Detecta WSL2 ou Docker Desktop
+   2. Se necessário, instala Docker dentro do WSL2
+   3. Sobe o lab/dia2 (Grafana + Prometheus + Node Exporter + cAdvisor + Alertmanager)
+   4. Aguarda 15s para o Grafana inicializar
+   5. Instala Python + Playwright + Chromium
+   6. Aplica a identidade visual (logo + cores) no Grafana
+   7. Captura 21 screenshots reais (login, dashboards, explore, painéis, alerts, etc.)
+   8. Regenera o PPTX com as imagens embutidas em uma seção "Capturas Reais"
+   9. Regenera os PDFs (versão aluno e instrutor)
+
+RESULTADO FINAL:
+   - E:\01_Projetos\Curso Grafana\docs\Grafana_Visualizando_Dados_V1.pptx
+     (agora com screenshots reais do SEU Grafana com a identidade da SUA escola)
+   - assets/screenshots/*.png (21 imagens)
+
+================================================================================
+4. EXECUÇÃO MANUAL (se preferir rodar passo a passo)
+================================================================================
+
+4.1. Subir o ambiente:
+   cd E:\01_Projetos\"Curso Grafana"\lab\dia2
+   docker compose up -d
+   # Aguardar 15 segundos para inicializar
+
+4.2. Acessar:
+   - Grafana:       http://localhost:3000  (admin/admin)
+   - Prometheus:    http://localhost:9090
+   - Alertmanager:  http://localhost:9093
+   - cAdvisor:      http://localhost:8080
+   - Node Exporter: http://localhost:9100/metrics
+
+4.3. Instalar Playwright (1x só):
+   pip install playwright pillow
+   python -m playwright install chromium
+
+4.4. Aplicar identidade visual:
+   python E:\01_Projetos\"Curso Grafana"\scripts\apply_brand.py
+
+4.5. Capturar telas:
+   python E:\01_Projetos\"Curso Grafana"\scripts\capture_grafana_screenshots.py
+
+4.6. Regenerar PPTX com as imagens:
+   cd E:\01_Projetos\"Curso Grafana"\docs
+   node generate_pptx_with_screenshots.js
+
+================================================================================
+5. DIA 1 - TEORIA + DOCKER (Aluno roda o lab/dia1)
+================================================================================
+
+Conteúdo programático (slides 1-25):
+   - O que é o Grafana, arquitetura, licenças (AGPLv3)
+   - Conceito de datasource, painel, dashboard
+   - Navegação na interface: menu lateral, top nav, busca
+   - Primeiro dashboard: stat, time series, table
+   - Conceito de provisionamento (arquivos YAML)
+   - Variáveis: $host, $interval, $__interval
+   - Exercício 1.1 a 1.8 (caderno)
+
+Para os alunos, eles rodam:
+   cd E:\01_Projetos\"Curso Grafana"\lab\dia1
+   docker compose up -d
+   # Acessar http://localhost:3000 e seguir roteiro do caderno
+
+================================================================================
+6. DIA 2 - VARIÁVEIS + CONTAINERS + ALERTAS (Aluno roda o lab/dia2)
+================================================================================
+
+Conteúdo programático (slides 26-37):
+   - Variáveis avançadas: regex, multi-value, custom
+   - Visualizações: gauge, bar gauge, heatmap, geomap
+   - cAdvisor: métricas de containers Docker
+   - PromQL avançado: rate(), increase(), histogram_quantile()
+   - Alertas no Grafana + Alertmanager
+   - Notificações: Slack, email, webhook
+   - Exercício 2.1 a 2.8
+
+================================================================================
+7. DIA 3 - INSTALAÇÃO NO UBUNTU (Aluno roda os scripts .sh)
+================================================================================
+
+Conteúdo programático (slides 38-49):
+   - Por que instalar fora do Docker
+   - Requisitos: Ubuntu 22.04, 2GB RAM, 10GB disco
+   - Repositório APT oficial do Grafana
+   - systemd: systemctl start grafana-server
+   - Configuração: grafana.ini, datasources provisionados
+   - Instalação de Prometheus + Node Exporter via binário
+   - Troubleshooting: portas, logs, permissões
+   - Exercício 3.1 a 3.6 (roda os 6 scripts em ordem)
+
+Sequência dos scripts (o aluno roda nessa ordem):
+   sudo bash 01-prepare.sh
+   sudo bash 02-install-grafana.sh
+   sudo bash 03-configure.sh
+   sudo bash 04-install-prometheus.sh
+   sudo bash 05-install-node-exporter.sh
+   sudo bash 06-validate.sh
+
+================================================================================
+8. DIA 4 - AVANÇADO (Plugins, temas, multi-datasource)
+================================================================================
+
+Conteúdo programático (slides 50-62):
+   - Plugins: instalação, mercado, plugins privados
+   - Temas customizados
+   - Provisionamento file-based completo
+   - Loki (logs), Tempo (traces), Pyroscope (profiling)
+   - Multi-datasource em painéis
+   - Transformações: filter by name, rename, join
+   - Anotações: marcar deploys e incidentes
+   - API do Grafana: criar dashboards via curl
+   - Exercício 4.1 a 4.5
+
+================================================================================
+9. GERAR PDFs A PARTIR DO PPTX
+================================================================================
+
+Opção 1 - via LibreOffice (gratuito):
+   & "C:\Program Files\LibreOffice\program\soffice.exe" --headless --convert-to pdf --outdir "E:\01_Projetos\Curso Grafana\docs" "E:\01_Projetos\Curso Grafana\docs\Grafana_Visualizando_Dados_V1.pptx"
+
+Opção 2 - via PowerPoint (se instalado):
+   Abrir o .pptx > Arquivo > Salvar como > PDF
+
+Opção 3 - usar o script Python build_aluno_pdf.py (cria versão aluno/instrutor):
+   cd E:\01_Projetos\"Curso Grafana"\docs
+   python build_aluno_pdf.py
+
+================================================================================
+10. COMANDOS ÚTEIS DO DIA-A-DIA
+================================================================================
+
+Parar o ambiente:
+   cd E:\01_Projetos\"Curso Grafana"\lab\dia2
+   docker compose down
+
+Ver logs do Grafana:
+   docker logs -f grafana
+
+Resetar tudo (apaga dados):
+   cd E:\01_Projetos\"Curso Grafana"\lab\dia2
+   docker compose down -v
+   docker compose up -d
+
+Ver portas em uso:
+   netstat -an | findstr :3000
+   netstat -an | findstr :9090
+
+================================================================================
+11. TROUBLESHOOTING
+================================================================================
+
+PROBLEMA: Docker não inicia no WSL
+   - Abra o Docker Desktop, vá em Settings > Resources > WSL Integration
+   - Ative a integração com sua distro (Ubuntu)
+   - Reinicie o WSL: wsl --shutdown
+
+PROBLEMA: Porta 3000 já em uso
+   - Descubra o que está usando: netstat -ano | findstr :3000
+   - Mate o processo: taskkill /PID <numero> /F
+   - Ou mude a porta no docker-compose.yml: "3001:3000"
+
+PROBLEMA: Playwright não instala o Chromium
+   - Rode: python -m playwright install --with-deps chromium
+   - Se falhar, tente: pip install --upgrade playwright
+
+PROBLEMA: Imagens não aparecem no PPTX regenerado
+   - Verifique se a pasta assets/screenshots tem os .png
+   - Rode o capture novamente: python scripts\capture_grafana_screenshots.py
+   - Depois rode o gerador: cd docs && node generate_pptx_with_screenshots.js
+
+PROBLEMA: Logo não aparece no Grafana
+   - Verifique se o arquivo existe: E:\01_Projetos\Curso Grafana\assets\logo\logo.png
+   - Formato deve ser PNG (não JPG, não SVG)
+   - Rode novamente: python scripts\apply_brand.py
+
+================================================================================
+12. CHECKLIST FINAL ANTES DA AULA
+================================================================================
+
+[ ] Logo em assets/logo/logo.png
+[ ] Paleta em assets/palette.json
+[ ] Docker Desktop aberto (ou WSL2 ativo)
+[ ] Rodei .\scripts\setup-e-capturar.ps1 com sucesso
+[ ] PPTX regenerado tem a seção "Capturas Reais" com imagens
+[ ] PDFs gerados (versão aluno + versão instrutor)
+[ ] Caderno de exercícios impresso (14 páginas)
+[ ] Roteiros impressos para os alunos
+[ ] Slide do professor: começar por "Bem-vindo" (slide 2)
+[ ] Slide do aluno: começar por "Visão geral" (slide 4)
+[ ] Ter um backup do .pptx em pen drive (nuvem cai, internet cai)
+
+================================================================================
+13. CONTATOS E REFERÊNCIAS
+================================================================================
+
+Documentação oficial: https://grafana.com/docs/grafana/latest/
+Prometheus:            https://prometheus.io/docs/
+PromQL:               https://prometheus.io/docs/prometheus/latest/querying/basics/
+Node Exporter:        https://github.com/prometheus/node_exporter
+cAdvisor:              https://github.com/google/cadvisor
+Alertmanager:          https://prometheus.io/docs/alerting/latest/alertmanager/
+
+================================================================================
+FIM - Boa aula!
+================================================================================
+

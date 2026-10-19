@@ -1,0 +1,14 @@
+{
+  "status": "firing",
+  "alerts": [
+    {
+      "labels": {
+        "alertname": "CPUAlta",
+        "instance": "host-lab"
+      },
+      "annotations": {
+        "summary": "Verificar CPU do host"
+      }
+    }
+  ]
+}

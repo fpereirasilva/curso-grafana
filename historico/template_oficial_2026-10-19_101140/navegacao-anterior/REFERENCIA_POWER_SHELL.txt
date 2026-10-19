@@ -1,0 +1,60 @@
+CURSO GRAFANA — REFERÊNCIA LOCAL DE POWERSHELL — V8
+5 noites · 20 horas de programação · 18h30–22h30
+Intervalo: 20h20–20h45
+
+DIRETÓRIO DE TRABALHO
+E:\01_Projetos\Curso Grafana
+
+ABRIR A PASTA
+Set-Location -LiteralPath 'E:\01_Projetos\Curso Grafana'
+
+ABRIR O ÍNDICE
+Invoke-Item -LiteralPath '.\00_COMECE_AQUI.html'
+
+INICIAR O LABORATÓRIO DO ALUNO
+Primeiro abra o Docker Desktop, ou confirme o Docker Engine ativo com Compose.
+.\iniciar-lab-alunos.ps1
+
+O lançador delega a Curso_Grafana_Green_V8\iniciar-lab.ps1, que inicia somente a stack local
+do aluno. Ele não chama os scripts Azure do professor.
+
+CONFERIR A STACK LOCAL
+Set-Location -LiteralPath '.\Curso_Grafana_Green_V8\lab\tutorial-environment'
+docker compose -p green-fundamentals ps
+docker compose -p green-fundamentals logs --tail 50
+
+ENDEREÇOS NO NAVEGADOR
+Grafana: http://localhost:3300
+Aplicação: http://localhost:38081
+Receptor Webhook: http://localhost:38090
+
+PARAR A STACK LOCAL PRESERVANDO OS VOLUMES
+Na pasta Curso_Grafana_Green_V8\lab\tutorial-environment:
+docker compose -p green-fundamentals stop
+
+Não é necessário apagar volumes para encerrar a aula. Os procedimentos de limpeza
+e recriação, quando necessários, devem ser executados conscientemente e fora deste guia.
+
+MATERIAIS
+Índice: 00_COMECE_AQUI.html
+Passo a passo com telas: Curso_Grafana_Green_V8\alunos\Guia_Visual_Exercicios_V8.html
+PDF do guia: Curso_Grafana_Green_V8\Guia_Visual_Exercicios_V8.pdf
+Apostila: Curso_Grafana_Green_V8\Apostila_do_Aluno_V8.pdf
+Exemplos opcionais: Curso_Grafana_Green_V8\exemplos-importaveis\README.md
+
+CRONOGRAMA POR NOITE
+18h30–19h55  Teoria — 85 min
+19h55–20h20  Demonstração — 25 min
+20h20–20h45  Intervalo — 25 min
+20h45–21h00  Exercícios comentados — 15 min
+21h00–22h15  Prática do aluno — 75 min
+22h15–22h30  Correção — 15 min
+Total por noite: 4 horas. As 20 horas totais incluem 2h05 de intervalos.
+
+COMPATIBILIDADE E AMBIENTE DO PROFESSOR
+docs, scripts, assets e lab/dia1 até lab/dia4 foram mantidos em seus caminhos por
+dependências das versões anteriores. A documentação vigente é a da pasta V8.
+lab/professor, scripts/deploy-azure-professor.ps1 e scripts/sync-and-start-professor.ps1
+continuam preservados. Não fazem parte do procedimento local do aluno.
+Os exemplos de instalação nativa Ubuntu estão no roteiro da V8; testes Azure são
+uma etapa independente. Esta organização não os executou.

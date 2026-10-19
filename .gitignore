@@ -1,0 +1,17 @@
+# Arquivos temporários e de teste QA
+_qa-*
+_orig-*
+_test-*
+*.zip
+
+# Node / Python
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Ambientes virtuais e IDEs
+.vscode/
+.idea/
+.env
+.env.local

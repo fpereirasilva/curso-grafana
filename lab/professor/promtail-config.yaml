@@ -1,0 +1,53 @@
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # Coleta de logs dos containers Docker (via /var/lib/docker/containers)
+  - job_name: docker-containers
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: docker-containers
+          __path__: /var/lib/docker/containers/*/*-json.log
+    pipeline_stages:
+      - json:
+          expressions:
+            log: log
+            stream: stream
+            attrs: attrs
+            tag: attrs.tag
+      - regex:
+          expression: '^/var/lib/docker/containers/(?P<container_id>[a-f0-9]+)/.*\.log$'
+          source: filename
+      # Tenta extrair JSON estruturado gerado pela aplicação (para enriquecer com trace_id)
+      - json:
+          expressions:
+            level: level
+            service: service
+            trace_id: trace_id
+            span_id: span_id
+            msg: msg
+            path: path
+            status: status
+          source: log
+      - labels:
+          stream:
+          level:
+          service:
+
+  # Coleta de logs de sistema (syslog e auth.log se existirem)
+  - job_name: system-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: system
+          __path__: /var/log/*.log
