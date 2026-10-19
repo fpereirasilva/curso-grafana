@@ -342,6 +342,47 @@ Quebrando o mito de que o Grafana serve apenas para monitorar infraestrutura de 
 
 ---
 
+## ☁️ GERENCIAMENTO DO AMBIENTE AZURE (CRIAR, LIGAR, DESLIGAR E DELETAR)
+
+Para o professor ou alunos que desejam operar a stack completa de observabilidade na nuvem Microsoft Azure, incluímos scripts de automação completos para todo o ciclo de vida da infraestrutura:
+
+### 1. 🚀 Criar o Ambiente do Zero na Azure
+Executa o provisionamento do Resource Group (`RG_CURSO_GRAFANA`), regras de firewall no NSG, IP Público estático, rede virtual e a VM Ubuntu 22.04 LTS (`Standard_D2s_v3`), instalando o Docker e subindo automaticamente os 10 containers da stack:
+* **No Windows (PowerShell):**
+  ```powershell
+  .\scripts\criar-ambiente-azure.ps1
+  ```
+* **No Linux / WSL (Bash):**
+  ```bash
+  bash scripts/criar-ambiente-azure.sh
+  ```
+
+### 2. ⚡ Ligar o Ambiente para a Aula
+Quando a VM estiver desligada e você for iniciar uma nova aula, ligue os recursos com:
+```bash
+az vm start --resource-group RG_CURSO_GRAFANA --name vm-grafana-professor
+```
+*(A VM possui serviço systemd configurado que inicializa todos os containers Docker e geradores de dados automaticamente no boot em menos de 45 segundos)*.
+
+### 3. ⏸️ Desligar / Desalocar após a Aula (Custo R$ 0)
+Ao término de cada aula, desligue e desaloque a CPU/RAM para pausar cobranças de computação na Azure:
+```bash
+az vm deallocate --resource-group RG_CURSO_GRAFANA --name vm-grafana-professor
+```
+
+### 4. 🗑️ Deletar Definitivamente o Ambiente (Fim do Curso)
+Quando a turma for concluída e você desejar destruir todos os recursos na nuvem (apagando a VM, discos, interfaces de rede, IPs e o Resource Group por completo):
+* **No Windows (PowerShell):**
+  ```powershell
+  .\scripts\deletar-ambiente-azure.ps1
+  ```
+* **No Linux / WSL (Bash):**
+  ```bash
+  bash scripts/deletar-ambiente-azure.sh
+  ```
+
+---
+
 ## 🛠️ Tecnologias Utilizadas na Formação
 * **Visualização:** [Grafana 11+](https://grafana.com)
 * **Métricas:** [Prometheus TSDB](https://prometheus.io) & Node Exporter
