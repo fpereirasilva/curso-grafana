@@ -125,22 +125,45 @@ Independentemente de ter subido via `.sh` (Linux) ou `.ps1` (Windows), abra o se
 
 ---
 
-## 📊 Dashboards Oficiais Prontos para Importação (2 Cliques)
+## 🎁 Modelos de Dashboards Prontos para Importar (Métricas, Logs, Traces e Dados Públicos)
 
-Na pasta [`lab/dashboards-prontos-importacao/`](lab/dashboards-prontos-importacao/README.md), você encontra 6 dashboards prontos:
+Para tornar as aulas dinâmicas e permitir que os alunos comparem seus resultados ou importem visões prontas em segundos, disponibilizamos **duas coleções completas de dashboards JSON**:
 
-1. `01-visao-geral-host.json`: Métricas de hardware do host (CPU, Memória, Disco raiz, Uptime).
-2. `02-host-dinamico.json`: Filtros dinâmicos com dropdowns de `$host` e `$cpu_mode`.
-3. `03-containers.json`: Consumo de CPU e ranking de RAM dos containers Docker.
-4. `04-central-logs-loki.json`: Central de logs agregados por nível (INFO, WARN, ERROR) e stream ao vivo.
-5. `05-ecommerce-apm-traces.json`: Métricas RED (Rate, Errors, Duration) e SLA da Loja Virtual.
-6. `06-dados-publicos-ibge-ssl-terremotos.json`: **Câmbio em tempo real (Dólar, Euro, Bitcoin), Estação Espacial ISS em órbita, População dos Estados pelo IBGE e Terremotos no mundo pelo USGS!**
+### 📦 Coleção A: Aplicação dos Alunos (Grafana News)
+Estes modelos usam as métricas e logs gerados pela aplicação de notícias que roda no laboratório do aluno (`localhost:3300`):
 
-### Como importar no seu Grafana:
-1. No Grafana, clique no ícone de **Dashboards** (menu lateral esquerdo).
-2. Clique em **New** ➔ **Import** (ou acerte direto: `http://localhost:3000/dashboard/import` ou `:3300`).
-3. Clique em **Upload dashboard JSON file** e escolha o arquivo.
-4. Selecione a fonte de dados (**Prometheus** ou **Loki**) e clique em **Import**.
+| Noite | Arquivo JSON | O que demonstra em tela |
+| :---: | :--- | :--- |
+| **Noite 2** | [`aluno/03-contador-requisicoes.json`](Curso_Grafana_Green_V9/exemplos-importaveis/aluno/03-contador-requisicoes.json) | Contador bruto de requisições e acessos |
+| **Noite 2** | [`aluno/04-taxa-por-rota.json`](Curso_Grafana_Green_V9/exemplos-importaveis/aluno/04-taxa-por-rota.json) | Cálculo de taxa (req/s) por endpoint com PromQL |
+| **Noite 2** | [`aluno/05-taxa-por-status.json`](Curso_Grafana_Green_V9/exemplos-importaveis/aluno/05-taxa-por-status.json) | Proporção e volume de códigos HTTP (200, 4xx, 5xx) |
+| **Noite 3** | [`aluno/06-logs-aplicacao.json`](Curso_Grafana_Green_V9/exemplos-importaveis/aluno/06-logs-aplicacao.json) | Central de logs com stream interativo do Loki |
+| **Noite 3** | [`aluno/07-logs-erros.json`](Curso_Grafana_Green_V9/exemplos-importaveis/aluno/07-logs-erros.json) | Painel dedicado à investigação e contagem de falhas |
+| **Noite 4** | [`aluno/08-integrado-metricas-logs-anotacoes.json`](Curso_Grafana_Green_V9/exemplos-importaveis/aluno/08-integrado-metricas-logs-anotacoes.json) | Painel integrado: Métricas + Logs + Anotações temporais |
+| **Noite 5** | [`aluno/09-projeto-final.json`](Curso_Grafana_Green_V9/exemplos-importaveis/aluno/09-projeto-final.json) | **Cockpit de Produção Completo do Projeto Final** |
+
+---
+
+### 🚀 Coleção B: Stack Avançada do Professor & Dados Públicos Globais
+Estes modelos trazem visões avançadas de infraestrutura, rastreamento distribuído e integração com APIs públicas em tempo real:
+
+| # | Arquivo JSON | O que demonstra em tela |
+| :---: | :--- | :--- |
+| **01** | [`professor/01-visao-geral-host.json`](Curso_Grafana_Green_V9/exemplos-importaveis/professor/01-visao-geral-host.json) | Métricas do Host: CPU, Memória, Disco raiz e Uptime |
+| **02** | [`professor/02-host-dinamico.json`](Curso_Grafana_Green_V9/exemplos-importaveis/professor/02-host-dinamico.json) | Dashboards dinâmicos com filtros por variáveis `$host` |
+| **03** | [`professor/03-containers.json`](Curso_Grafana_Green_V9/exemplos-importaveis/professor/03-containers.json) | Métricas de microsserviços e ranking de consumo de RAM/CPU |
+| **04** | [`professor/04-central-logs-loki.json`](Curso_Grafana_Green_V9/exemplos-importaveis/professor/04-central-logs-loki.json) | Volume de logs por nível (INFO, WARN, ERROR) e stream ao vivo |
+| **05** | [`professor/05-ecommerce-apm-traces.json`](Curso_Grafana_Green_V9/exemplos-importaveis/professor/05-ecommerce-apm-traces.json) | **APM de Loja Virtual com Traces Distribuídos no Tempo** |
+| **06** | [`professor/06-dados-publicos-ibge-ssl-terremotos.json`](Curso_Grafana_Green_V9/exemplos-importaveis/professor/06-dados-publicos-ibge-ssl-terremotos.json) | **Cotações Dólar/Euro/Bitcoin, ISS no espaço, IBGE e Terremotos USGS** |
+
+---
+
+### 🛠️ Como Importar Qualquer Modelo no seu Grafana em 3 Passos:
+1. Baixe ou abra o arquivo JSON desejado da tabela acima.
+2. No seu Grafana, clique no ícone de **Dashboards** (menu lateral esquerdo) ➔ **New** ➔ **Import** (ou acesse `http://localhost:3300/dashboard/import`).
+3. Clique no botão azul **Upload dashboard JSON file**, selecione o arquivo, aponte a sua fonte de dados (**Prometheus** ou **Loki**) e clique em **Import**.
+
+Pronto! O dashboard carrega instantaneamente com gráficos coloridos e indicadores em tempo real.
 
 ---
 

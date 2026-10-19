@@ -11,63 +11,35 @@
   "panels": [
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
       "id": 10,
       "title": "Visão Geral dos Logs (Loki)",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "${DS_LOKI}"
-      },
+      "datasource": { "type": "loki", "uid": "Loki" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
+          "color": { "mode": "palette-classic" },
           "custom": {
             "drawStyle": "bars",
             "fillOpacity": 80,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            }
-          },
-          "unit": "short"
+            "stacking": { "group": "A", "mode": "normal" }
+          }
         },
         "overrides": []
       },
-      "gridPos": {
-        "h": 7,
-        "w": 12,
-        "x": 0,
-        "y": 1
-      },
+      "gridPos": { "h": 7, "w": 12, "x": 0, "y": 1 },
       "id": 1,
       "options": {
-        "legend": {
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "multi",
-          "sort": "desc"
-        }
+        "legend": { "displayMode": "list", "placement": "bottom" },
+        "tooltip": { "mode": "multi", "sort": "desc" }
       },
-      "title": "Linhas de log na janela móvel de 1 minuto",
+      "title": "Volume de Logs por Nível (Linhas/segundo)",
       "type": "timeseries",
       "targets": [
         {
-          "datasource": {
-            "type": "loki",
-            "uid": "${DS_LOKI}"
-          },
+          "datasource": { "type": "loki", "uid": "Loki" },
           "expr": "sum by (level) (count_over_time({job=\"docker-containers\"} [1m]))",
           "legendFormat": "Nível {{level}}",
           "refId": "A"
@@ -75,61 +47,36 @@
       ]
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "${DS_LOKI}"
-      },
+      "datasource": { "type": "loki", "uid": "Loki" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 5
-              }
+              { "color": "green", "value": null },
+              { "color": "red", "value": 5 }
             ]
           }
         },
         "overrides": []
       },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 12,
-        "y": 1
-      },
+      "gridPos": { "h": 7, "w": 6, "x": 12, "y": 1 },
       "id": 2,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false },
         "textMode": "auto"
       },
       "title": "Erros Recentes (Loki)",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "loki",
-            "uid": "${DS_LOKI}"
-          },
+          "datasource": { "type": "loki", "uid": "Loki" },
           "expr": "sum(count_over_time({job=\"docker-containers\"} |= \"ERROR\" [5m]))",
           "legendFormat": "Total de Erros",
           "refId": "A"
@@ -137,52 +84,30 @@
       ]
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "${DS_LOKI}"
-      },
+      "datasource": { "type": "loki", "uid": "Loki" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              {
-                "color": "blue",
-                "value": null
-              }
+              { "color": "blue", "value": null }
             ]
           }
         }
       },
-      "gridPos": {
-        "h": 7,
-        "w": 6,
-        "x": 18,
-        "y": 1
-      },
+      "gridPos": { "h": 7, "w": 6, "x": 18, "y": 1 },
       "id": 3,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }
       },
       "title": "Total de Logs Coletados (5m)",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "loki",
-            "uid": "${DS_LOKI}"
-          },
+          "datasource": { "type": "loki", "uid": "Loki" },
           "expr": "sum(count_over_time({job=\"docker-containers\"} [5m]))",
           "legendFormat": "Total Logs",
           "refId": "A"
@@ -191,27 +116,14 @@
     },
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 8
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 8 },
       "id": 11,
       "title": "Stream Interativo de Logs em Tempo Real",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "loki",
-        "uid": "${DS_LOKI}"
-      },
-      "gridPos": {
-        "h": 15,
-        "w": 24,
-        "x": 0,
-        "y": 9
-      },
+      "datasource": { "type": "loki", "uid": "Loki" },
+      "gridPos": { "h": 15, "w": 24, "x": 0, "y": 9 },
       "id": 4,
       "options": {
         "dedupStrategy": "none",
@@ -222,94 +134,24 @@
         "sortOrder": "Descending",
         "wrapLogMessage": true
       },
-      "title": "Logs dos containers (detalhes na linha)",
+      "title": "Logs ao Vivo dos Containers (Clique na linha para expandir e ver o link do TraceID)",
       "type": "logs",
       "targets": [
         {
-          "datasource": {
-            "type": "loki",
-            "uid": "${DS_LOKI}"
-          },
+          "datasource": { "type": "loki", "uid": "Loki" },
           "expr": "{job=\"docker-containers\"}",
           "refId": "A"
         }
-      ],
-      "description": "Um link para Tempo depende da fonte Loki com derived field TraceID e da instrumentação; o dashboard não cria essa configuração."
+      ]
     }
   ],
   "refresh": "5s",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": [
-    "curso-grafana",
-    "curso-green",
-    "logs",
-    "loki",
-    "modelo-opcional"
-  ],
-  "time": {
-    "from": "now-15m",
-    "to": "now"
-  },
-  "timepicker": {
-    "refresh_intervals": [
-      "5s",
-      "10s",
-      "30s",
-      "1m"
-    ]
-  },
+  "tags": ["loki", "logs", "curso-grafana"],
+  "time": { "from": "now-15m", "to": "now" },
+  "timepicker": { "refresh_intervals": ["5s", "10s", "30s", "1m"] },
   "timezone": "browser",
   "title": "04 - Central de Logs (Loki)",
-  "uid": null,
-  "description": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Loki com streams job=docker-containers; nível level disponível quando se desejar agrupamento por nível. TraceID exige configuração adicional de derived fields no Loki.",
-  "__inputs": [
-    {
-      "name": "DS_LOKI",
-      "label": "Loki",
-      "description": "Selecione a fonte de dados já conectada ao seu laboratório.",
-      "type": "datasource",
-      "pluginId": "loki",
-      "pluginName": "Loki"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.3.0"
-    },
-    {
-      "type": "datasource",
-      "id": "loki",
-      "name": "Loki",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "logs",
-      "name": "logs",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "row",
-      "name": "row",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "timeseries",
-      "version": ""
-    }
-  ],
-  "version": 1
+  "uid": "central-logs-loki"
 }

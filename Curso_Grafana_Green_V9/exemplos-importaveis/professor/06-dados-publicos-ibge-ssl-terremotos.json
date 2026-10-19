@@ -1,7 +1,5 @@
 {
-  "annotations": {
-    "list": []
-  },
+  "annotations": { "list": [] },
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
@@ -11,164 +9,93 @@
   "panels": [
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
       "id": 10,
       "title": "Câmbio & Mercado Financeiro em Tempo Real (OpenER / Coinbase)",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
+            "steps": [{ "color": "green", "value": null }]
           },
           "unit": "currencyBRL"
         }
       },
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 0,
-        "y": 1
-      },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 1 },
       "id": 1,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Dólar Americano (USD / BRL)",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "finance_currency_price_brl{moeda=\"USD\"}",
           "refId": "A"
         }
       ]
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "blue",
-                "value": null
-              }
-            ]
+            "steps": [{ "color": "blue", "value": null }]
           },
           "unit": "currencyBRL"
         }
       },
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 6,
-        "y": 1
-      },
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 1 },
       "id": 2,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Euro (EUR / BRL)",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "finance_currency_price_brl{moeda=\"EUR\"}",
           "refId": "A"
         }
       ]
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "orange",
-                "value": null
-              }
-            ]
+            "steps": [{ "color": "orange", "value": null }]
           },
           "unit": "currencyUSD"
         }
       },
-      "gridPos": {
-        "h": 5,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
+      "gridPos": { "h": 5, "w": 12, "x": 12, "y": 1 },
       "id": 3,
       "options": {
         "colorMode": "value",
         "graphMode": "area",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Bitcoin (BTC / USD)",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "finance_btc_price_usd",
           "refId": "A"
         }
@@ -176,213 +103,120 @@
     },
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 6
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 6 },
       "id": 14,
       "title": "🛰️ Rastreamento ao Vivo da Estação Espacial Internacional (ISS)",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "purple",
-                "value": null
-              }
-            ]
+            "steps": [{ "color": "purple", "value": null }]
           },
           "unit": "velocitykmh"
         }
       },
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 0,
-        "y": 7
-      },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 7 },
       "id": 20,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Velocidade Orbital da ISS",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "iss_velocity_kmh",
           "refId": "A"
         }
       ]
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "teal",
-                "value": null
-              }
-            ]
+            "steps": [{ "color": "teal", "value": null }]
           },
           "unit": "lengthkm"
         }
       },
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 6,
-        "y": 7
-      },
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 7 },
       "id": 21,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Altitude Orbital da ISS",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "iss_altitude_km",
           "refId": "A"
         }
       ]
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "yellow",
-                "value": null
-              }
-            ]
+            "steps": [{ "color": "yellow", "value": null }]
           }
         }
       },
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 12,
-        "y": 7
-      },
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 7 },
       "id": 22,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Latitude Atual da ISS",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "iss_latitude",
           "refId": "A"
         }
       ]
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
-            "steps": [
-              {
-                "color": "yellow",
-                "value": null
-              }
-            ]
+            "steps": [{ "color": "yellow", "value": null }]
           }
         }
       },
-      "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 18,
-        "y": 7
-      },
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 7 },
       "id": 23,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Longitude Atual da ISS",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "iss_longitude",
           "refId": "A"
         }
@@ -390,71 +224,40 @@
     },
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 12
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 12 },
       "id": 11,
       "title": "Monitoramento de Sites & Validade de Certificados SSL (Blackbox)",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 15
-              },
-              {
-                "color": "green",
-                "value": 30
-              }
+              { "color": "red", "value": null },
+              { "color": "yellow", "value": 15 },
+              { "color": "green", "value": 30 }
             ]
           },
           "unit": "d"
         }
       },
-      "gridPos": {
-        "h": 6,
-        "w": 14,
-        "x": 0,
-        "y": 13
-      },
+      "gridPos": { "h": 6, "w": 14, "x": 0, "y": 13 },
       "id": 4,
       "options": {
         "orientation": "horizontal",
         "showThresholdLabels": false,
         "showThresholdMarkers": true,
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Dias Restantes para o Certificado SSL Expirar",
       "type": "gauge",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "site_ssl_days_remaining",
           "legendFormat": "{{site}}",
           "refId": "A"
@@ -462,42 +265,25 @@
       ]
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
+          "color": { "mode": "palette-classic" },
           "unit": "ms"
         }
       },
-      "gridPos": {
-        "h": 6,
-        "w": 10,
-        "x": 14,
-        "y": 13
-      },
+      "gridPos": { "h": 6, "w": 10, "x": 14, "y": 13 },
       "id": 5,
       "options": {
         "colorMode": "value",
         "graphMode": "none",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        }
+        "reduceOptions": { "calcs": ["lastNotNull"] }
       },
       "title": "Tempo de Resposta / Latência do Site (ms)",
       "type": "stat",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "site_probe_duration_ms",
           "legendFormat": "{{site}}",
           "refId": "A"
@@ -506,35 +292,20 @@
     },
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 19
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 19 },
       "id": 12,
       "title": "Dados Públicos Oficiais do Brasil — IBGE (População Estimada por Estado)",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
+          "color": { "mode": "palette-classic" },
           "unit": "locale"
         }
       },
-      "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 20
-      },
+      "gridPos": { "h": 10, "w": 24, "x": 0, "y": 20 },
       "id": 6,
       "options": {
         "displayMode": "gradient",
@@ -544,9 +315,7 @@
         "minVizHeight": 10,
         "reduceOptions": {
           "values": false,
-          "calcs": [
-            "lastNotNull"
-          ],
+          "calcs": ["lastNotNull"],
           "fields": ""
         }
       },
@@ -554,10 +323,7 @@
       "type": "bargauge",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "topk(12, ibge_populacao_estado)",
           "format": "time_series",
           "instant": true,
@@ -568,26 +334,16 @@
     },
     {
       "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 30
-      },
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 30 },
       "id": 13,
       "title": "Monitoramento Sísmico Global em Tempo Real — USGS (Última Hora)",
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
       "fieldConfig": {
         "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
+          "color": { "mode": "thresholds" },
           "custom": {
             "align": "auto",
             "displayMode": "color-background-solid"
@@ -595,53 +351,26 @@
           "thresholds": {
             "mode": "absolute",
             "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 2
-              },
-              {
-                "color": "orange",
-                "value": 3.5
-              },
-              {
-                "color": "red",
-                "value": 5
-              }
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 2 },
+              { "color": "orange", "value": 3.5 },
+              { "color": "red", "value": 5 }
             ]
           }
         }
       },
-      "gridPos": {
-        "h": 9,
-        "w": 24,
-        "x": 0,
-        "y": 31
-      },
+      "gridPos": { "h": 9, "w": 24, "x": 0, "y": 31 },
       "id": 7,
       "options": {
         "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
+        "footer": { "countRows": false, "fields": "", "reducer": ["sum"], "show": false },
         "showHeader": true
       },
       "title": "Ocorrências Recentes de Terremotos no Mundo (Magnitude, Localização, Coordenadas)",
       "type": "table",
       "targets": [
         {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
+          "datasource": { "type": "prometheus", "uid": "prometheus" },
           "expr": "usgs_earthquake_magnitude",
           "format": "table",
           "instant": true,
@@ -652,13 +381,7 @@
         {
           "id": "organize",
           "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true,
-              "categoria": true,
-              "instance": true,
-              "job": true
-            },
+            "excludeByName": { "Time": true, "__name__": true, "categoria": true, "instance": true, "job": true },
             "renameByName": {
               "Value": "Magnitude",
               "lat": "Latitude",
@@ -673,77 +396,9 @@
   "refresh": "10s",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": [
-    "cripto",
-    "curso-green",
-    "ibge",
-    "iss",
-    "modelo-opcional",
-    "public-data",
-    "ssl",
-    "usgs"
-  ],
-  "time": {
-    "from": "now-1h",
-    "to": "now"
-  },
+  "tags": ["ibge", "public-data", "usgs", "ssl", "cripto", "iss"],
+  "time": { "from": "now-1h", "to": "now" },
   "timezone": "browser",
-  "title": "06 - Dados públicos - modelo dependente de coletor",
-  "uid": null,
-  "description": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Requer coletor customizado de dados públicos: séries finance_*, iss_*, site_*, ibge_populacao_estado e usgs_earthquake_magnitude. O JSON não instala/exporta os coletores, não consulta APIs públicas diretamente e não comprova dados ao vivo.",
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "Prometheus",
-      "description": "Selecione a fonte de dados já conectada ao seu laboratório.",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.3.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "bargauge",
-      "name": "bargauge",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "gauge",
-      "name": "gauge",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "row",
-      "name": "row",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "table",
-      "version": ""
-    }
-  ],
-  "version": 1
+  "title": "06 - Observabilidade de Dados Públicos (IBGE, USGS, Finanças, SSL e ISS)",
+  "uid": "dados-publicos-ibge-ssl"
 }
