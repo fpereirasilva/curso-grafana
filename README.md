@@ -10,6 +10,35 @@
 
 ---
 
+## 🎥 VÍDEOS OFICIAIS DA APRESENTAÇÃO (EMBEDDED)
+
+Assista aos vídeos oficiais demonstrativos presentes nos slides da apresentação do curso:
+
+### 🎬 Vídeo 1: Introdução ao Grafana e Demonstração Prática
+[![Vídeo 1: Introdução ao Grafana e Demonstração Prática](https://img.youtube.com/vi/TQur9GJHIIQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=TQur9GJHIIQ)
+*(Clique na imagem acima para assistir ao vídeo no YouTube)*
+
+### 🎬 Vídeo 2: Visão Geral de Dashboards, Painéis e Alertas no Grafana
+[![Vídeo 2: Visão Geral de Dashboards, Painéis e Alertas no Grafana](https://img.youtube.com/vi/ClLp-iSoaSY/maxresdefault.jpg)](https://www.youtube.com/watch?v=ClLp-iSoaSY)
+*(Clique na imagem acima para assistir ao vídeo no YouTube)*
+
+---
+
+## 📖 REFERÊNCIAS OFICIAIS — GRAFANA FUNDAMENTALS (GRAFANA LABS)
+
+Este curso tem como espinha dorsal a trilha oficial de capacitação da **Grafana Labs**. Recomendamos aos alunos a leitura e consulta dos guias originais:
+
+* 📘 **Tutorial Central:** [Grafana Fundamentals Tutorial](https://grafana.com/tutorials/grafana-fundamentals/) — Laboratório prático oficial de construção de dashboards com Prometheus e Grafana News.
+* 📊 **Catálogo de Visualizações:** [Panels & Visualizations Reference](https://grafana.com/docs/grafana/latest/visualizations/panels-visualizations/) — Guia completo sobre Stat, Gauge, Bar Gauge, Heatmaps e Time Series.
+* 🚨 **Engenharia de Alertas:** [Alert Rule Evaluation Fundamentals](https://grafana.com/docs/grafana/latest/alerting/fundamentals/alert-rule-evaluation/) — Máquina de estados de avaliação e tolerância temporal de alertas.
+* 🪵 **Logs Estruturados com Loki:** [Grafana Loki Overview](https://grafana.com/docs/loki/latest/get-started/overview/) — Arquitetura de indexação por metadados e armazenamento em chunks.
+* 🔍 **Linguagem LogQL:** [LogQL Query Syntax & Metrics](https://grafana.com/docs/loki/latest/query/log_queries/) — Como construir filtros de linha, parsers JSON e agregações numéricas.
+* 🛰️ **Rastreamento Distribuído no Tempo:** [TraceQL Documentation](https://grafana.com/docs/tempo/latest/traceql/) — Como consultar e inspecionar spans com o Grafana Tempo e OpenTelemetry.
+* ⚙️ **Agentes de Coleta:** [Promtail Setup](https://grafana.com/docs/loki/latest/send-data/promtail/) e a evolução moderna [Migrate from Promtail to Grafana Alloy](https://grafana.com/docs/alloy/latest/set-up/migrate/from-promtail/).
+* 🔔 **Pontos de Contato e Notificadores:** [Configuração de Webhooks no Grafana](https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/webhook-notifier/) e [Notificações por E-mail](https://grafana.com/docs/grafana/latest/alerting/configure-notifications/manage-contact-points/integrations/configure-email/).
+
+---
+
 ## 🧭 Visão Geral e Guia de Início Rápido
 
 Você pode executar os laboratórios do curso em três modalidades diferentes:
