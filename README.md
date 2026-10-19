@@ -13,6 +13,25 @@ Se você é aluno do curso, abra o arquivo central no seu navegador para ter ace
 
 ---
 
+## 📚 Passo a Passo Prático da Apostila (Noite a Noite)
+
+Siga o roteiro oficial de exercícios práticos da apostila clicando diretamente no dia correspondente:
+
+| Noite | Tema Oficial | Guia Passo a Passo (Markdown) | Apostila em PDF |
+| :---: | :--- | :---: | :---: |
+| **Noite 1** | **Preparação e Primeiros Passos** (Iniciar Lab, Grafana News, Primeiro Voto) | [📖 Ler Noite 1](Curso_Grafana_Green_V9/alunos/Aluno_Noite_1.md) | [📥 Baixar PDF](Curso_Grafana_Green_V9/alunos/Aluno_Noite_1.pdf) |
+| **Noite 2** | **Métricas e PromQL** (Explore, Consultas no Prometheus, Builders vs Code) | [📖 Ler Noite 2](Curso_Grafana_Green_V9/alunos/Aluno_Noite_2.md) | [📥 Baixar PDF](Curso_Grafana_Green_V9/alunos/Aluno_Noite_2.pdf) |
+| **Noite 3** | **Logs e LogQL** (Configuração do Loki, Streams, Filtros de Linhas) | [📖 Ler Noite 3](Curso_Grafana_Green_V9/alunos/Aluno_Noite_3.md) | [📥 Baixar PDF](Curso_Grafana_Green_V9/alunos/Aluno_Noite_3.pdf) |
+| **Noite 4** | **Dashboards e Anotações** (Criação Manual, Painéis Stat/Timeseries, Marcadores) | [📖 Ler Noite 4](Curso_Grafana_Green_V9/alunos/Aluno_Noite_4.md) | [📥 Baixar PDF](Curso_Grafana_Green_V9/alunos/Aluno_Noite_4.pdf) |
+| **Noite 5** | **Alertas e Entrega do Projeto** (Contato Webhook, Regras de Alerta, Homologação) | [📖 Ler Noite 5](Curso_Grafana_Green_V9/alunos/Aluno_Noite_5.md) | [📥 Baixar PDF](Curso_Grafana_Green_V9/alunos/Aluno_Noite_5.pdf) |
+
+> 💡 **Material Completo Consolidado:**
+> * [📕 Apostila Completa do Aluno (V8 - Todas as Noites)](Curso_Grafana_Green_V9/Apostila_do_Aluno_V8.pdf)
+> * [🖼️ Guia Visual com Capturas de Tela](Curso_Grafana_Green_V9/Guia_Visual_Exercicios_V8.pdf)
+> * [💻 Instalação Nativa no Ubuntu sem Docker (Roteiro Completo)](Curso_Grafana_Green_V9/Roteiro_Ubuntu.md)
+
+---
+
 ## 💻 Como Executar os Laboratórios (Escolha o seu Cenário)
 
 Você pode fazer todos os laboratórios do curso de duas formas. **Escolha a que melhor se adapta ao seu ambiente:**
