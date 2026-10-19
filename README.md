@@ -13,33 +13,63 @@ Se você é aluno do curso, abra o arquivo central no seu navegador para ter ace
 
 ---
 
-## 🚀 Como Subir e Parar o Laboratório dos Alunos (1 Clique)
+## 💻 Como Executar os Laboratórios (Escolha o seu Cenário)
 
-### 🪟 No Windows (via PowerShell):
-Com o Docker Desktop aberto, abra o PowerShell nesta pasta e execute:
-```powershell
-# Para iniciar:
-.\iniciar-lab-alunos.ps1
+Você pode fazer todos os laboratórios do curso de duas formas. **Escolha a que melhor se adapta ao seu ambiente:**
 
-# Para parar:
-.\parar-lab-alunos.ps1
-```
+---
 
-### 🐧 No Linux / Ubuntu / WSL2:
-Com o Docker Engine instalado, abra o terminal nesta pasta e execute:
-```bash
-# Para iniciar:
-bash iniciar-lab.sh
+### 🐧 Cenário 1 (Recomendado): Dentro da sua Máquina Virtual Linux / Ubuntu
+Se você criou uma VM Ubuntu (no VirtualBox, VMware, Hyper-V, Proxmox, WSL2 ou nuvem), **este é o caminho ideal**, pois simula exatamente o dia a dia de produção dos servidores.
 
-# Para parar:
-bash parar-lab.sh
-```
+1. Abra o terminal dentro da sua VM Ubuntu e clone o repositório:
+   ```bash
+   git clone https://github.com/fpereirasilva/curso-grafana.git
+   cd curso-grafana
+   ```
 
-### 🌐 Endereços dos Serviços no seu Computador:
-Assim que os containers iniciarem, abra no seu navegador:
-* **Grafana:** [http://localhost:3300](http://localhost:3300) *(ou [http://localhost:3000](http://localhost:3000) nos labs das pastas `lab/`)*
-* **Aplicação de Notícias (Demo):** [http://localhost:38081](http://localhost:38081)
-* **Receptor de Webhooks:** [http://localhost:38090](http://localhost:38090)
+2. Para iniciar o laboratório completo (1 comando):
+   ```bash
+   bash iniciar-lab.sh
+   ```
+
+3. Para encerrar os containers quando terminar a aula:
+   ```bash
+   bash parar-lab.sh
+   ```
+
+*(Dica: você também pode abrir e ler o manual mastigado no próprio terminal com: `cat GUIA_PRATICO_DO_ALUNO.txt`)*.
+
+---
+
+### 🪟 Cenário 2: Direto no Windows (via PowerShell e Docker Desktop)
+Se você prefere rodar os laboratórios diretamente no seu Windows físico sem criar uma VM Linux separada, utilize o **Docker Desktop**:
+
+1. Abra o **PowerShell** no Windows e clone o repositório:
+   ```powershell
+   git clone https://github.com/fpereirasilva/curso-grafana.git
+   cd curso-grafana
+   ```
+
+2. Certifique-se de que o **Docker Desktop** está aberto e rodando no Windows.
+
+3. Para iniciar o laboratório com 1 clique:
+   ```powershell
+   .\iniciar-lab-alunos.ps1
+   ```
+
+4. Para encerrar os containers:
+   ```powershell
+   .\parar-lab-alunos.ps1
+   ```
+
+---
+
+### 🌐 Onde Acessar os Serviços após Iniciar:
+Independentemente de ter subido via `.sh` (Linux) ou `.ps1` (Windows), abra o seu navegador de preferência:
+* **📊 Grafana:** [http://localhost:3300](http://localhost:3300) *(ou `http://<IP-DA-SUA-VM>:3300` se estiver acessando de fora da VM)*
+* **📰 Aplicação de Notícias (Demo):** [http://localhost:38081](http://localhost:38081)
+* **📬 Receptor de Webhooks:** [http://localhost:38090](http://localhost:38090)
 
 ---
 
