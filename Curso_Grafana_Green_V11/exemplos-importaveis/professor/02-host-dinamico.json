@@ -1,0 +1,153 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 1,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "type": "row",
+      "title": "Painéis com variáveis",
+      "gridPos": { "h": 1, "w": 24, "x": 0, "y": 0 },
+      "collapsed": false,
+      "id": 100,
+      "panels": []
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "yellow", "value": 70 },
+              { "color": "red", "value": 90 }
+            ]
+          },
+          "unit": "percent"
+        }
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 0, "y": 1 },
+      "id": 1,
+      "title": "CPU ($host)",
+      "type": "stat",
+      "targets": [
+        { "expr": "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance=~\"$host\"}[5m])) * 100)", "refId": "A" }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "thresholds" },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              { "color": "green", "value": null },
+              { "color": "orange", "value": 60 },
+              { "color": "red", "value": 85 }
+            ]
+          },
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        }
+      },
+      "gridPos": { "h": 6, "w": 6, "x": 6, "y": 1 },
+      "id": 2,
+      "title": "Memória ($host)",
+      "type": "gauge",
+      "targets": [
+        { "expr": "(1 - (node_memory_MemAvailable_bytes{instance=~\"$host\"} / node_memory_MemTotal_bytes{instance=~\"$host\"})) * 100", "refId": "A" }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": { "unit": "bytes" }
+      },
+      "gridPos": { "h": 6, "w": 12, "x": 12, "y": 1 },
+      "id": 3,
+      "title": "Top 5 processos por memória (estimado)",
+      "type": "table",
+      "targets": [
+        { "expr": "topk(5, node_memory_MemTotal_bytes{instance=~\"$host\"} - node_memory_MemAvailable_bytes{instance=~\"$host\"})", "format": "table", "instant": true, "refId": "A" }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": { "fillOpacity": 10, "lineWidth": 2, "drawStyle": "line" },
+          "unit": "percent"
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 7 },
+      "id": 4,
+      "title": "CPU por core ao longo do tempo",
+      "type": "timeseries",
+      "targets": [
+        { "expr": "100 - (avg by(cpu) (rate(node_cpu_seconds_total{mode=\"idle\", instance=~\"$host\"}[$__rate_interval]))) * 100", "legendFormat": "cpu{{cpu}}", "refId": "A" }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "palette-classic" },
+          "custom": { "fillOpacity": 80, "lineWidth": 1, "drawStyle": "bars", "gradientMode": "opacity" },
+          "unit": "short"
+        }
+      },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 7 },
+      "id": 5,
+      "title": "Bytes recebidos pela rede",
+      "type": "barchart",
+      "targets": [
+        { "expr": "rate(node_network_receive_bytes_total{instance=~\"$host\",device!~\"lo|veth.*|docker.*\"}[5m]) * 8", "legendFormat": "{{device}}", "refId": "A" }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": {
+        "defaults": {
+          "color": { "mode": "spectrum" },
+          "custom": { "hideFrom": { "tooltip": false, "viz": false, "legend": false } }
+        }
+      },
+      "gridPos": { "h": 8, "w": 24, "x": 0, "y": 15 },
+      "id": 6,
+      "title": "Heatmap de uso de CPU por hora do dia",
+      "type": "heatmap",
+      "targets": [
+        { "expr": "100 - (avg by(instance) (rate(node_cpu_seconds_total{mode=\"idle\", instance=~\"$host\"}[5m])) * 100)", "format": "heatmap", "legendFormat": "{{instance}}", "refId": "A" }
+      ]
+    }
+  ],
+  "refresh": "15s",
+  "schemaVersion": 39,
+  "tags": ["lab", "intermediario", "variaveis"],
+  "templating": {
+    "list": [
+      {
+        "name": "host",
+        "type": "query",
+        "datasource": { "type": "prometheus", "uid": "prometheus" },
+        "query": "label_values(node_cpu_seconds_total, instance)",
+        "refresh": 2,
+        "includeAll": true,
+        "multi": true,
+        "current": { "text": "All", "value": "$__all" }
+      }
+    ]
+  },
+  "time": { "from": "now-1h", "to": "now" },
+  "title": "02 - Host dinâmico (variáveis)",
+  "uid": "lab-host-dinamico",
+  "version": 1
+}
