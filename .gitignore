@@ -15,3 +15,8 @@ __pycache__/
 .idea/
 .env
 .env.local
+
+# Temporários do Office e ferramentas
+~$*
+Opus 5.5 outputs/
+Opus 5.5 outputs/

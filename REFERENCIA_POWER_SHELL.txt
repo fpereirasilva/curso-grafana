@@ -1,4 +1,4 @@
-CURSO GRAFANA — REFERÊNCIA LOCAL DE POWERSHELL — APRESENTAÇÃO V9 / GUIAS V8
+CURSO GRAFANA — REFERÊNCIA LOCAL DE POWERSHELL — APRESENTAÇÃO E GUIAS V12
 5 noites · 20 horas incluindo intervalos · 18h30–22h30
 Intervalo: 20h20–20h45
 
@@ -37,24 +37,32 @@ e recriação, quando necessários, devem ser executados conscientemente e fora 
 
 MATERIAIS
 Índice: 00_COMECE_AQUI.html
-Passo a passo com telas: Curso_Grafana_Green_V9\alunos\Guia_Visual_Exercicios_V8.html
-PDF do guia: Curso_Grafana_Green_V9\Guia_Visual_Exercicios_V8.pdf
-Apostila: Curso_Grafana_Green_V9\Apostila_do_Aluno_V8.pdf
-Exemplos opcionais: Curso_Grafana_Green_V9\exemplos-importaveis\README.md
+Passo a passo com telas: Curso_Grafana_Green_V12\alunos\Guia_Visual_Exercicios_V12.html
+PDF do guia: Curso_Grafana_Green_V12\Guia_Visual_Exercicios_V12.pdf
+Apostila: Curso_Grafana_Green_V12\Apostila_do_Aluno_V12.pdf
+Exemplos opcionais: Curso_Grafana_Green_V12\exemplos-importaveis\README.md
 
-CRONOGRAMA POR NOITE
-18h30–19h55  Teoria — 85 min
-19h55–20h20  Demonstração — 25 min
-20h20–20h45  Intervalo — 25 min
-20h45–21h00  Exercícios comentados — 15 min
-21h00–22h15  Prática do aluno — 75 min
-22h15–22h30  Correção — 15 min
-Total por noite: 4 horas. As 20 horas totais incluem 2h05 de intervalos.
+NOITES 1, 3, 4 E 5
+18h30–19h55  Teoria (85 minutos)
+19h55–20h20  Demonstração do professor (25 minutos)
+20h20–20h45  Intervalo (25 minutos)
+20h45–21h00  Exercícios comentados (15 minutos)
+21h00–22h15  Prática do aluno (75 minutos)
+22h15–22h30  Correção e fechamento (15 minutos)
+
+NOITE 2 — MÉTRICAS
+18h30–20h20  Teoria aprofundada e discussão conceitual (110 minutos)
+20h20–20h45  Intervalo (25 minutos)
+20h45–21h20  Exercício guiado: professor e alunos executam juntos (35 minutos)
+21h20–22h15  Consolidação individual dos exercícios 2.1, 2.2 e 2.3 (55 minutos)
+22h15–22h30  Correção e fechamento (15 minutos)
+Na Noite 2, o ambiente Grafana é utilizado em conjunto após o intervalo.
+As 20 horas incluem os intervalos: 17h55 de atividades e 2h05 de intervalos.
 
 COMPATIBILIDADE E AMBIENTE DO PROFESSOR
 docs, scripts, assets e lab/dia1 até lab/dia4 foram mantidos em seus caminhos por
-dependências das versões anteriores. A documentação vigente é a da pasta V9.
+dependências das versões anteriores. A documentação vigente é a da pasta V12.
 lab/professor, scripts/deploy-azure-professor.ps1 e scripts/sync-and-start-professor.ps1
 continuam preservados. Não fazem parte do procedimento local do aluno.
-Os exemplos de instalação nativa Ubuntu estão no roteiro da V8; testes Azure são
+Os exemplos de instalação nativa Ubuntu estão no roteiro preservado na V12; testes Azure são
 uma etapa independente. Esta organização não os executou.

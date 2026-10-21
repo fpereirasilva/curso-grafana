@@ -5,6 +5,7 @@ datasources:
   - name: Prometheus
     type: prometheus
     access: proxy
+    uid: prometheus
     url: http://prometheus:9090
     isDefault: true
     editable: true
@@ -16,6 +17,7 @@ datasources:
   - name: Loki
     type: loki
     access: proxy
+    uid: loki
     url: http://loki:3100
     editable: true
     jsonData:
@@ -40,7 +42,7 @@ datasources:
     jsonData:
       httpMethod: GET
       tracesToLogsV2:
-        datasourceUid: Loki
+        datasourceUid: loki
         spanStartTimeShift: '-5m'
         spanEndTimeShift: '5m'
         tags: ['service.name']
@@ -49,12 +51,13 @@ datasources:
       nodeGraph:
         enabled: true
       serviceMap:
-        datasourceUid: Prometheus
+        datasourceUid: prometheus
 
   # 4. Alertmanager
   - name: Alertmanager
     type: alertmanager
     access: proxy
+    uid: alertmanager
     url: http://alertmanager:9093
     editable: true
     jsonData:

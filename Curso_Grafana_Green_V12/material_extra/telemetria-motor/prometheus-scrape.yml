@@ -1,0 +1,7 @@
+# Trecho para colocar em scrape_configs: do prometheus.yml
+  - job_name: telemetria-motor
+    scrape_interval: 5s
+    static_configs:
+      # Se o Prometheus roda em container na mesma rede do compose, use o nome do serviço.
+      # Se o simulador roda direto na máquina, use host.docker.internal:8090 (Docker Desktop).
+      - targets: ["telemetria-motor:8090"]

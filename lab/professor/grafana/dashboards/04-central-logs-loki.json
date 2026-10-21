@@ -17,7 +17,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "loki", "uid": "Loki" },
+      "datasource": { "type": "loki", "uid": "loki" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "palette-classic" },
@@ -39,7 +39,7 @@
       "type": "timeseries",
       "targets": [
         {
-          "datasource": { "type": "loki", "uid": "Loki" },
+          "datasource": { "type": "loki", "uid": "loki" },
           "expr": "sum by (level) (count_over_time({job=\"docker-containers\"} [1m]))",
           "legendFormat": "Nível {{level}}",
           "refId": "A"
@@ -47,7 +47,7 @@
       ]
     },
     {
-      "datasource": { "type": "loki", "uid": "Loki" },
+      "datasource": { "type": "loki", "uid": "loki" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -76,7 +76,7 @@
       "type": "stat",
       "targets": [
         {
-          "datasource": { "type": "loki", "uid": "Loki" },
+          "datasource": { "type": "loki", "uid": "loki" },
           "expr": "sum(count_over_time({job=\"docker-containers\"} |= \"ERROR\" [5m]))",
           "legendFormat": "Total de Erros",
           "refId": "A"
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "datasource": { "type": "loki", "uid": "Loki" },
+      "datasource": { "type": "loki", "uid": "loki" },
       "fieldConfig": {
         "defaults": {
           "color": { "mode": "thresholds" },
@@ -107,7 +107,7 @@
       "type": "stat",
       "targets": [
         {
-          "datasource": { "type": "loki", "uid": "Loki" },
+          "datasource": { "type": "loki", "uid": "loki" },
           "expr": "sum(count_over_time({job=\"docker-containers\"} [5m]))",
           "legendFormat": "Total Logs",
           "refId": "A"
@@ -122,7 +122,7 @@
       "type": "row"
     },
     {
-      "datasource": { "type": "loki", "uid": "Loki" },
+      "datasource": { "type": "loki", "uid": "loki" },
       "gridPos": { "h": 15, "w": 24, "x": 0, "y": 9 },
       "id": 4,
       "options": {
@@ -138,7 +138,7 @@
       "type": "logs",
       "targets": [
         {
-          "datasource": { "type": "loki", "uid": "Loki" },
+          "datasource": { "type": "loki", "uid": "loki" },
           "expr": "{job=\"docker-containers\"}",
           "refId": "A"
         }

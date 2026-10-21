@@ -1,52 +1,61 @@
-CURSO GRAFANA — GREEN TECNOLOGIA — APRESENTAÇÃO V9 / GUIAS V8
+CURSO GRAFANA — GREEN TECNOLOGIA — APRESENTAÇÃO E GUIAS V12
 Instrutor: Fábio Silva, Arquiteto de Soluções
 5 noites · 18h30 às 22h30 · 20 horas incluindo intervalos
 Intervalo diário: 20h20 às 20h45
 
 COMECE AQUI
-Abra 00_COMECE_AQUI.html no navegador. Use os materiais dentro de Curso_Grafana_Green_V9.
+Abra 00_COMECE_AQUI.html no navegador. Use os materiais dentro de Curso_Grafana_Green_V12.
 
-HORÁRIO EM TODAS AS NOITES
+NOITES 1, 3, 4 E 5
 18h30–19h55  Teoria (85 minutos)
 19h55–20h20  Demonstração do professor (25 minutos)
 20h20–20h45  Intervalo (25 minutos)
 20h45–21h00  Exercícios comentados (15 minutos)
 21h00–22h15  Prática do aluno (75 minutos)
 22h15–22h30  Correção e fechamento (15 minutos)
+
+NOITE 2 — MÉTRICAS
+18h30–20h20  Teoria aprofundada e discussão conceitual (110 minutos)
+20h20–20h45  Intervalo (25 minutos)
+20h45–21h20  Exercício guiado: professor e alunos executam juntos (35 minutos)
+21h20–22h15  Consolidação individual dos exercícios 2.1, 2.2 e 2.3 (55 minutos)
+22h15–22h30  Correção e fechamento (15 minutos)
+Na Noite 2, o ambiente Grafana é utilizado em conjunto após o intervalo.
 As 20 horas incluem os intervalos: 17h55 de atividades e 2h05 de intervalos.
 
 ANTES DE COMEÇAR
 1. Extraia o pacote completo e mantenha suas subpastas juntas.
 2. Abra e aguarde a inicialização do Docker Desktop ou Docker Engine.
 3. No PowerShell desta pasta, execute .\iniciar-lab-alunos.ps1.
+   O lançador preservado continua usando o laboratório da pasta V9; os materiais estão na V12.
 4. Aguarde os downloads e a inicialização dos serviços.
 5. Abra http://localhost:3300 no navegador para acessar o Grafana.
    Aplicação: http://localhost:38081
    Receptor didático de Webhook: http://localhost:38090
 
 PASSO A PASSO COM PRINTS
-Curso_Grafana_Green_V9/alunos/Guia_Visual_Exercicios_V8.html
-Curso_Grafana_Green_V9/Guia_Visual_Exercicios_V8.pdf
+Curso_Grafana_Green_V12/alunos/Guia_Visual_Exercicios_V12.html
+Curso_Grafana_Green_V12/Guia_Visual_Exercicios_V12.pdf
 Clique nas imagens do guia HTML para ampliar.
 
 EXERCÍCIOS DAS CINCO NOITES
-Noite 1: Curso_Grafana_Green_V9/alunos/Aluno_Noite_1.pdf
-Noite 2: Curso_Grafana_Green_V9/alunos/Aluno_Noite_2.pdf
-Noite 3: Curso_Grafana_Green_V9/alunos/Aluno_Noite_3.pdf
-Noite 4: Curso_Grafana_Green_V9/alunos/Aluno_Noite_4.pdf
-Noite 5: Curso_Grafana_Green_V9/alunos/Aluno_Noite_5.pdf
+Noite 1: Curso_Grafana_Green_V12/alunos/Aluno_Noite_1.pdf
+Noite 2: Curso_Grafana_Green_V12/alunos/Aluno_Noite_2.pdf
+Noite 3: Curso_Grafana_Green_V12/alunos/Aluno_Noite_3.pdf
+Noite 4: Curso_Grafana_Green_V12/alunos/Aluno_Noite_4.pdf
+Noite 5: Curso_Grafana_Green_V12/alunos/Aluno_Noite_5.pdf
 Os arquivos Markdown de cada noite ficam na mesma pasta.
 
 EXEMPLOS PRONTOS, OPCIONAIS
-Há arquivos para importação e consulta em Curso_Grafana_Green_V9/exemplos-importaveis/.
+Há arquivos para importação e consulta em Curso_Grafana_Green_V12/exemplos-importaveis/.
 Leia o README.md dessa pasta para identificar o ambiente, o formato e os pré-requisitos.
 Eles ficam separados dos exercícios manuais e podem ajudar na comparação dos resultados.
 A importação de um dashboard não importa os dados históricos nem configura automaticamente
 fontes de dados, regras, contatos ou anotações manuais. Siga a orientação de cada exemplo.
 
 APOSTILA E ARQUITETURA
-Curso_Grafana_Green_V9/Apostila_do_Aluno_V8.pdf
-Curso_Grafana_Green_V9/arquitetura/Arquitetura_Grafana_Green.drawio
+Curso_Grafana_Green_V12/Apostila_do_Aluno_V12.pdf
+Curso_Grafana_Green_V12/arquitetura/Arquitetura_Grafana_Green.drawio
 
 SE ALGO NÃO APARECER
 Confira se o Docker está ativo, se os containers terminaram de iniciar, se você abriu
@@ -55,5 +64,5 @@ pelo exercício e ajuste o intervalo de tempo. Consulte a seção de diagnóstic
 
 PASTAS ANTIGAS
 lab/dia1 até lab/dia4 e os PDFs em docs pertencem à estrutura anterior do curso.
-Use a pasta V9 para acompanhar as cinco noites atuais; apostila e guias mantêm a versão V8. O ambiente do professor fica
+Use a pasta V12 para acompanhar o material atual e a teoria de métricas revisada. O ambiente do professor fica
 separado em lab/professor; não é necessário executá-lo para seguir o laboratório do aluno.

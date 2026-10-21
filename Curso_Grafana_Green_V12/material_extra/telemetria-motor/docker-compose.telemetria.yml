@@ -1,0 +1,12 @@
+# Acrescente este serviço ao docker-compose do laboratório (ou use: docker compose -f docker-compose.telemetria.yml up -d --build)
+# Depois adicione o job no prometheus.yml (veja prometheus-scrape.yml) e reinicie o Prometheus.
+services:
+  telemetria-motor:
+    build: .
+    container_name: telemetria-motor
+    environment:
+      - VEICULO=demo-01
+      - ACELERA=1          # 1 = tempo real; use 10 para ver o ciclo de 10 min em 1 min
+    ports:
+      - "8090:8090"
+    restart: unless-stopped
