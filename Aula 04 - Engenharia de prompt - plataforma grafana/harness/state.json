@@ -1,0 +1,50 @@
+{
+  "project": "observabilidade-ia-azure-lab",
+  "current_phase": "8. Concluído e Entregue",
+  "resource_group": "rgaula4grafana",
+  "subscription_id": "b34ce124-5fd1-47a1-ba7c-acbf5367c573",
+  "location": "eastus2",
+  "vm_name": "vm-aula4-grafana",
+  "public_ip": "20.230.76.242",
+  "fqdn": "grafana-aula4-lab.eastus2.cloudapp.azure.com",
+  "endpoints": {
+    "grafana": "http://20.230.76.242:3000",
+    "prometheus": "http://20.230.76.242:9090",
+    "ecommerce_api": "http://20.230.76.242:8000/checkout",
+    "notification_receiver": "http://20.230.76.242:8088/alerts"
+  },
+  "phases": {
+    "1_descoberta": {
+      "status": "verified",
+      "evidence": "Resource Group rgaula4grafana criado no Azure eastus2; assinatura validada; SSH público validado."
+    },
+    "2_estrutura": {
+      "status": "verified",
+      "evidence": "Estrutura de diretórios para harness, context, memory, stack, app-demo, scripts, infra e docs criada."
+    },
+    "3_preparacao": {
+      "status": "verified",
+      "evidence": "Bicep, compose.yaml, configurações de Prometheus, Loki, Alloy, Grafana e app-demo gerados e validados."
+    },
+    "4_plano_azure": {
+      "status": "verified",
+      "evidence": "SKU Standard_D2s_v3 provisionado, IP público com FQDN atribuído e NSG restrito aplicado."
+    },
+    "5_implantacao": {
+      "status": "verified",
+      "evidence": "VM criada em 20.230.76.242, Docker 29.9.2 instalado, 8 containers em execução."
+    },
+    "6_configuracao": {
+      "status": "verified",
+      "evidence": "Datasources Prometheus e Loki provisionados; Dashboard E-Commerce importado com sucesso."
+    },
+    "7_validacao": {
+      "status": "verified",
+      "evidence": "Métricas raspadas (3 targets UP), logs ingeridos no Loki via Alloy com service=ecommerce-lab, ciclo firing e resolved comprovado no Alertmanager."
+    },
+    "8_entrega": {
+      "status": "verified",
+      "evidence": "Guias do Professor e Aluno, Exercícios com Gabarito e Políticas de Parada e Custos entregues."
+    }
+  }
+}

@@ -1,0 +1,38 @@
+project: "observabilidade-ia-azure-lab"
+aula: "Aula 04 - Engenharia de Prompt e Observabilidade"
+target_audience: "Alunos do Curso Grafana"
+core_stack:
+  grafana:
+    version: "11.3.0"
+    port: 3000
+    datasources: ["Prometheus", "Loki"]
+  prometheus:
+    version: "v2.54.1"
+    port: 9090
+    scrape_interval: "15s"
+    retention: "24h"
+  loki:
+    version: "3.2.0"
+    port: 3100
+    mode: "monolithic"
+    retention: "24h"
+  alloy:
+    version: "v1.4.3"
+    role: "coletor e parser de logs JSON da app"
+  alertmanager:
+    version: "v0.27.0"
+    port: 9093
+    receiver: "http-notification-receiver"
+  node_exporter:
+    version: "v1.8.2"
+    port: 9100
+  app_demo:
+    name: "ecommerce-demo"
+    port: 8000
+    endpoints:
+      - "/health"
+      - "/metrics"
+      - "/checkout"
+  notification_receiver:
+    port: 8088
+    role: "webhook sink para validação didática de alertas"

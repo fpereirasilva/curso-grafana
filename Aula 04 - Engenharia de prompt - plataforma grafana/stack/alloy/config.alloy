@@ -1,0 +1,22 @@
+// Configuração oficial do Grafana Alloy para coleta de logs da Aula 04
+
+loki.write "local_loki" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
+
+local.file_match "app_logs" {
+  path_targets = [
+    {
+      "__path__"    = "/var/log/app/*.log",
+      "service"     = "ecommerce-lab",
+      "environment" = "lab",
+    },
+  ]
+}
+
+loki.source.file "ecommerce_log_scraper" {
+  targets    = local.file_match.app_logs.targets
+  forward_to = [loki.write.local_loki.receiver]
+}

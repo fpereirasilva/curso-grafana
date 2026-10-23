@@ -1,0 +1,32 @@
+version: "1.0"
+project: "observabilidade-ia-azure-lab"
+environment: "lab-didatico"
+author: "Fabio Silva"
+scope:
+  resource_group: "rgaula4grafana"
+  subscription_id: "b34ce124-5fd1-47a1-ba7c-acbf5367c573"
+  location: "eastus2"
+  vm_name: "vm-aula4-grafana"
+  vm_size: "Standard_D2s_v3"
+  network:
+    vnet: "vnet-aula4-grafana"
+    subnet: "snet-aula4-grafana"
+    cidr_vnet: "10.20.0.0/16"
+    cidr_subnet: "10.20.1.0/24"
+policies:
+  security:
+    access_mode: "ssh-tunnel-or-restricted-ip"
+    allowed_inbound_cidrs:
+      - "187.101.181.210/32"
+    allow_public_any_ports: false
+    no_secrets_in_git: true
+    root_login_disabled: true
+  cost:
+    max_hourly_usd: 0.15
+    auto_deallocate_post_class: true
+    disk_type: "StandardSSD_LRS"
+    disk_size_gb: 32
+  telemetry:
+    retention_metrics: "24h"
+    retention_logs: "24h"
+    scrape_interval: "15s"
