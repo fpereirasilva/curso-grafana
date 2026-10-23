@@ -1,17 +1,15 @@
 {
   "project": "observabilidade-ia-azure-lab",
-  "current_phase": "8. Concluído e Entregue",
+  "current_phase": "9. Encerrado e Desprovisionado",
   "resource_group": "rgaula4grafana",
   "subscription_id": "b34ce124-5fd1-47a1-ba7c-acbf5367c573",
   "location": "eastus2",
   "vm_name": "vm-aula4-grafana",
-  "public_ip": "20.230.76.242",
-  "fqdn": "grafana-aula4-lab.eastus2.cloudapp.azure.com",
-  "endpoints": {
-    "grafana": "http://20.230.76.242:3000",
-    "prometheus": "http://20.230.76.242:9090",
-    "ecommerce_api": "http://20.230.76.242:8000/checkout",
-    "notification_receiver": "http://20.230.76.242:8088/alerts"
+  "lifecycle": {
+    "created_at": "2026-10-23T23:00:00Z",
+    "deleted_at": "2026-10-23T23:25:00Z",
+    "azure_status": "Deleting / Terminated",
+    "cost_status": "Zero (Recursos destruidos)"
   },
   "phases": {
     "1_descoberta": {
@@ -32,7 +30,7 @@
     },
     "5_implantacao": {
       "status": "verified",
-      "evidence": "VM criada em 20.230.76.242, Docker 29.9.2 instalado, 8 containers em execução."
+      "evidence": "VM criada em 20.230.76.242, Docker 29.9.2 instalado, 8 containers executados com sucesso."
     },
     "6_configuracao": {
       "status": "verified",
@@ -45,6 +43,10 @@
     "8_entrega": {
       "status": "verified",
       "evidence": "Guias do Professor e Aluno, Exercícios com Gabarito e Políticas de Parada e Custos entregues."
+    },
+    "9_limpeza_definitiva": {
+      "status": "verified",
+      "evidence": "Comando az group delete --name rgaula4grafana executado. Ambiente Azure destruido, gerando custo zero remanescente."
     }
   }
 }
