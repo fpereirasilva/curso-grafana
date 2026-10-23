@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'Lab Aula 04'
+    orgId: 1
+    folder: 'Aula 04 - Observabilidade e Prompt'
+    type: file
+    disableDeletion: false
+    editable: true
+    options:
+      path: /var/lib/grafana/dashboards

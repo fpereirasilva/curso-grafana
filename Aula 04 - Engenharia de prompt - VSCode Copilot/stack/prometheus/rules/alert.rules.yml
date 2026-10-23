@@ -1,0 +1,35 @@
+groups:
+  - name: ecommerce_alerts
+    rules:
+      - alert: ServiceDown
+        expr: up{job="ecommerce-app"} == 0
+        for: 30s
+        labels:
+          severity: critical
+          service: ecommerce-lab
+          environment: lab
+        annotations:
+          summary: "Serviço E-Commerce está fora do ar (DOWN)"
+          description: "O endpoint /metrics da aplicação parou de responder há mais de 30 segundos."
+
+      - alert: HighHttpErrorRate
+        expr: sum(rate(http_requests_total{service="ecommerce-lab", status=~"5.."}[2m])) / sum(rate(http_requests_total{service="ecommerce-lab"}[2m])) > 0.15
+        for: 30s
+        labels:
+          severity: warning
+          service: ecommerce-lab
+          environment: lab
+        annotations:
+          summary: "Alta taxa de erros 5xx detectada"
+          description: "Mais de 15% das requisições resultaram em HTTP 5xx nos últimos 2 minutos."
+
+      - alert: HighLatencyP95
+        expr: histogram_quantile(0.95, sum by (le) (rate(http_request_duration_seconds_bucket{service="ecommerce-lab"}[2m]))) > 0.5
+        for: 30s
+        labels:
+          severity: warning
+          service: ecommerce-lab
+          environment: lab
+        annotations:
+          summary: "Latência p95 acima de 500ms"
+          description: "O percentil 95 de tempo de resposta ultrapassou 500ms no serviço de checkout."

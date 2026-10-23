@@ -1,0 +1,15 @@
+global:
+  resolve_timeout: 1m
+
+route:
+  group_by: ['alertname', 'service']
+  group_wait: 10s
+  group_interval: 30s
+  repeat_interval: 1h
+  receiver: 'internal-webhook'
+
+receivers:
+  - name: 'internal-webhook'
+    webhook_configs:
+      - url: 'http://notification-receiver:8088/webhook'
+        send_resolved: true
