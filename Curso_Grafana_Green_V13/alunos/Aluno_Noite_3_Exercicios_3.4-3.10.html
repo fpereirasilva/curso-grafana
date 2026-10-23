@@ -1,0 +1,261 @@
+<!doctype html><html lang='pt-BR'><head><meta charset='utf-8'><title>Noite 3 — Exercícios 3.4 a 3.10</title><style>body{font-family:'Trebuchet MS',Arial,sans-serif;color:#333;max-width:820px;margin:24px auto;font-size:13px;line-height:1.45}
+h1{color:#73A277}h2{color:#3D588B;border-bottom:2px solid #73A277;padding-bottom:4px;margin-top:28px;page-break-before:always}
+h2:first-of-type{page-break-before:auto}pre{background:#F2F5FA;border:1px solid #C9D3E3;border-radius:6px;padding:8px 10px;white-space:pre-wrap;font-size:11.5px}
+code{font-family:Consolas,monospace;color:#1F3A68}img{max-width:100%;border:1px solid #C9D3E3;border-radius:4px;margin:4px 0 10px}
+table{border-collapse:collapse}td,th{border:1px solid #ccd;padding:4px 8px}th{background:#3D588B;color:#fff}blockquote{border-left:4px solid #73A277;margin:8px 0;padding:4px 12px;background:#EAF3EA}</style></head><body><h1>Noite 3 — Exercícios guiados 3.4 a 3.10 (Loki / LogQL)</h1>
+<p>Guia V13 • Fábio Silva • Ambiente: <strong>Grafana do professor</strong> (endereço informado em aula), fonte <strong>Loki</strong>, serviço de e-commerce. Grafana 11.3 · Loki 3.3.</p>
+<p>Cada exercício tem a <strong>forma certa</strong> e o <strong>erro comum</strong> que vale a pena provocar de propósito. Execute os dois, compare o resultado e registre a explicação. Todas as consultas e mensagens abaixo foram executadas no ambiente do professor em 22/10/2026.</p>
+<blockquote>
+<p>Dica: no Explore, escolha <strong>Loki</strong>, mude o editor para <strong>Code</strong>, cole a consulta e pressione <strong>Shift+Enter</strong>. Use o período indicado em cada exercício.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>Exercício</th>
+<th>Tema</th>
+<th>Período</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.4 — Selecionar o serviço certo</td>
+<td>Seletor de stream</td>
+<td>Last 15 minutes</td>
+</tr>
+<tr>
+<td>3.5 — Erros pelo label, não pelo texto</td>
+<td>Label x filtro de linha</td>
+<td>Last 15 minutes</td>
+</tr>
+<tr>
+<td>3.6 — Buscar texto ignorando maiúsculas</td>
+<td>Filtro de linha com regex</td>
+<td>Last 15 minutes</td>
+</tr>
+<tr>
+<td>3.7 — Abrir o JSON dentro do JSON</td>
+<td>Parser json + line_format</td>
+<td>Last 15 minutes</td>
+</tr>
+<tr>
+<td>3.8 — Filtrar por status numérico</td>
+<td>Filtro de label após parser</td>
+<td>Last 15 minutes</td>
+</tr>
+<tr>
+<td>3.9 — Contar logs por nível</td>
+<td>Consulta de métrica</td>
+<td>Last 1 hour</td>
+</tr>
+<tr>
+<td>3.10 — Ranking das rotas com falha</td>
+<td>Agregação + topk</td>
+<td>Last 1 hour</td>
+</tr>
+</tbody>
+</table>
+<h2>Exercício 3.4 — Selecionar o serviço certo</h2>
+<p><strong>Tema:</strong> Seletor de stream • <strong>Período:</strong> Last 15 minutes</p>
+<ol>
+<li>
+<p>Abra Explore, escolha a fonte Loki e mude o editor para Code.</p>
+</li>
+<li>
+<p>Clique em Label browser, escolha o label service e o valor ecommerce-shop.</p>
+</li>
+<li>
+<p>Confira a consulta montada, execute com Shift+Enter e observe Logs volume.</p>
+</li>
+<li>
+<p>Repita digitando o valor sem aspas e leia a mensagem de erro.</p>
+</li>
+</ol>
+<p><strong>✔ Forma certa</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;}
+</code></pre>
+<p><img alt="Exercício 3.4 — forma certa" src="capturas/n3-3.4-certo.png" /></p>
+<p><strong>✘ Erro comum</strong></p>
+<pre><code>{service=ecommerce-shop}
+</code></pre>
+<p>Sintoma: <code>parse error at line 1, col 10: syntax error: unexpected IDENTIFIER, expecting STRING</code></p>
+<p><img alt="Exercício 3.4 — erro comum" src="capturas/n3-3.4-erro.png" /></p>
+<p><strong>Por quê:</strong> Valores de label são strings e precisam de aspas duplas. Um seletor vazio ({} ou service=~".*") também é recusado: o Loki exige ao menos um matcher que não aceite vazio.</p>
+<p><strong>Resultado esperado:</strong> Linhas do e-commerce com os níveis INFO, WARNING e ERROR no histograma.</p>
+<p><strong>Registre:</strong> Quantos níveis aparecem no Logs volume? Qual a mensagem de erro do seletor sem aspas?</p>
+<h2>Exercício 3.5 — Erros pelo label, não pelo texto</h2>
+<p><strong>Tema:</strong> Label x filtro de linha • <strong>Período:</strong> Last 15 minutes</p>
+<ol>
+<li>
+<p>Acrescente level="ERROR" ao seletor do exercício anterior.</p>
+</li>
+<li>
+<p>Execute e confirme que o histograma ficou só com a cor de erro.</p>
+</li>
+<li>
+<p>Agora troque por {service="ecommerce-shop"} |= "error" e execute.</p>
+</li>
+<li>
+<p>Compare: por que a segunda consulta não traz nada?</p>
+</li>
+</ol>
+<p><strong>✔ Forma certa</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;, level=&quot;ERROR&quot;}
+</code></pre>
+<p><img alt="Exercício 3.5 — forma certa" src="capturas/n3-3.5-certo.png" /></p>
+<p><strong>✘ Erro comum</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;} |= &quot;error&quot;
+</code></pre>
+<p>Sintoma: <code>No data: 0 linhas (o texto do log usa ERROR em maiúsculas)</code></p>
+<p><img alt="Exercício 3.5 — erro comum" src="capturas/n3-3.5-erro.png" /></p>
+<p><strong>Por quê:</strong> |= diferencia maiúsculas de minúsculas. Este serviço registra ERROR. Quando o nível já é label, filtrar no seletor é mais rápido e não depende do texto.</p>
+<p><strong>Resultado esperado:</strong> Somente linhas de erro, quase todas de falha no gateway de pagamento.</p>
+<p><strong>Registre:</strong> Anote o horário e a mensagem de duas linhas de erro.</p>
+<h2>Exercício 3.6 — Buscar texto ignorando maiúsculas</h2>
+<p><strong>Tema:</strong> Filtro de linha com regex • <strong>Período:</strong> Last 15 minutes</p>
+<ol>
+<li>
+<p>Volte para {service="ecommerce-shop"}, sem o label level.</p>
+</li>
+<li>
+<p>Acrescente |~ "(?i)gateway de pagamento" e execute.</p>
+</li>
+<li>
+<p>Teste a variação |= "Gateway" e compare a quantidade de linhas.</p>
+</li>
+<li>
+<p>Opcional: exclua um cliente com != "10.0.4.15" depois do filtro.</p>
+</li>
+</ol>
+<p><strong>✔ Forma certa</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;} |~ &quot;(?i)gateway de pagamento&quot;
+</code></pre>
+<p><img alt="Exercício 3.6 — forma certa" src="capturas/n3-3.6-certo.png" /></p>
+<p><strong>✘ Erro comum</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;} |= &quot;Gateway&quot;
+</code></pre>
+<p>Sintoma: <code>No data: 0 linhas (no log a palavra é "gateway", minúscula)</code></p>
+<p><img alt="Exercício 3.6 — erro comum" src="capturas/n3-3.6-erro.png" /></p>
+<p><strong>Por quê:</strong> (?i) dentro da regex liga a comparação sem diferenciar maiúsculas. |= procura o texto exatamente como foi digitado.</p>
+<p><strong>Resultado esperado:</strong> Linhas ERROR com "Falha de processamento no gateway de pagamento".</p>
+<p><strong>Registre:</strong> Qual dos dois filtros é mais seguro quando você não conhece o texto exato? Por quê?</p>
+<h2>Exercício 3.7 — Abrir o JSON dentro do JSON</h2>
+<p><strong>Tema:</strong> Parser json + line_format • <strong>Período:</strong> Last 15 minutes</p>
+<ol>
+<li>
+<p>Abra uma linha e veja o envelope do Docker: {"log": "{...}", "stream": ..., "time": ...}.</p>
+</li>
+<li>
+<p>Digite a consulta certa: json, line_format "{{.log}}" e json de novo.</p>
+</li>
+<li>
+<p>Execute e confira que cada linha mostra nível, rota e mensagem.</p>
+</li>
+<li>
+<p>Teste a versão com um único | json e veja as linhas quase vazias.</p>
+</li>
+</ol>
+<p><strong>✔ Forma certa</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;} | json | line_format &quot;{{.log}}&quot; | json | line_format &quot;{{.level_extracted}} {{.endpoint}} {{.msg}}&quot;
+</code></pre>
+<p><img alt="Exercício 3.7 — forma certa" src="capturas/n3-3.7-certo.png" /></p>
+<p><strong>✘ Erro comum</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;} | json | line_format &quot;{{.level}} {{.endpoint}} {{.msg}}&quot;
+</code></pre>
+<p>Sintoma: <code>Linhas como "INFO  ": endpoint e msg vazios</code></p>
+<p><img alt="Exercício 3.7 — erro comum" src="capturas/n3-3.7-erro.png" /></p>
+<p><strong>Por quê:</strong> O primeiro json só enxerga log, stream e time. É preciso trocar a linha pelo conteúdo de log e aplicar json outra vez para chegar em msg, endpoint e status. Como level já é label, o campo extraído vira level_extracted.</p>
+<p><strong>Resultado esperado:</strong> Linhas legíveis: ERROR /api/v1/checkout Falha de processamento no gateway...</p>
+<p><strong>Registre:</strong> Expanda uma linha e liste quatro campos extraídos.</p>
+<h2>Exercício 3.8 — Filtrar por status numérico</h2>
+<p><strong>Tema:</strong> Filtro de label após parser • <strong>Período:</strong> Last 15 minutes</p>
+<ol>
+<li>
+<p>Parta da consulta do 3.7 e troque o último line_format por | status &gt;= 500.</p>
+</li>
+<li>
+<p>Execute e confira que só restam respostas 500.</p>
+</li>
+<li>
+<p>Teste o filtro sem parser: {service="ecommerce-shop"} | status &gt;= 500.</p>
+</li>
+<li>
+<p>Teste também status &gt;= "500" com aspas e leia o erro.</p>
+</li>
+</ol>
+<p><strong>✔ Forma certa</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;} | json | line_format &quot;{{.log}}&quot; | json | status &gt;= 500
+</code></pre>
+<p><img alt="Exercício 3.8 — forma certa" src="capturas/n3-3.8-certo.png" /></p>
+<p><strong>✘ Erro comum</strong></p>
+<pre><code>{service=&quot;ecommerce-shop&quot;} | status &gt;= 500
+</code></pre>
+<p>Sintoma: <code>No data: status ainda não existe sem o parser.  Com "500" entre aspas: syntax error: unexpected STRING</code></p>
+<p><img alt="Exercício 3.8 — erro comum" src="capturas/n3-3.8-erro.png" /></p>
+<p><strong>Por quê:</strong> Filtros de label só enxergam campos que já foram extraídos. Números são comparados sem aspas.</p>
+<p><strong>Resultado esperado:</strong> Somente linhas com status 500 nas rotas de checkout e pagamento.</p>
+<p><strong>Registre:</strong> Quais rotas aparecem com status 500?</p>
+<h2>Exercício 3.9 — Contar logs por nível</h2>
+<p><strong>Tema:</strong> Consulta de métrica • <strong>Período:</strong> Last 1 hour</p>
+<ol>
+<li>
+<p>Escreva sum by (level) (count_over_time({service="ecommerce-shop"}[5m])).</p>
+</li>
+<li>
+<p>Execute com Last 1 hour e observe as três séries no gráfico.</p>
+</li>
+<li>
+<p>Remova [5m] e leia a mensagem de erro.</p>
+</li>
+<li>
+<p>Troque count_over_time por rate e compare a unidade.</p>
+</li>
+</ol>
+<p><strong>✔ Forma certa</strong></p>
+<pre><code>sum by (level) (count_over_time({service=&quot;ecommerce-shop&quot;}[5m]))
+</code></pre>
+<p><img alt="Exercício 3.9 — forma certa" src="capturas/n3-3.9-certo.png" /></p>
+<p><strong>✘ Erro comum</strong></p>
+<pre><code>count_over_time({service=&quot;ecommerce-shop&quot;})
+</code></pre>
+<p>Sintoma: <code>parse error: syntax error: unexpected )</code></p>
+<p><img alt="Exercício 3.9 — erro comum" src="capturas/n3-3.9-erro.png" /></p>
+<p><strong>Por quê:</strong> Funções de range precisam da janela entre colchetes. count_over_time conta linhas na janela; rate divide pelos segundos da janela.</p>
+<p><strong>Resultado esperado:</strong> Três séries: INFO (maior), WARNING e ERROR.</p>
+<p><strong>Registre:</strong> Quantas linhas ERROR em 5 minutos no ponto mais alto?</p>
+<h2>Exercício 3.10 — Ranking das rotas com falha</h2>
+<p><strong>Tema:</strong> Agregação + topk • <strong>Período:</strong> Last 1 hour</p>
+<ol>
+<li>
+<p>Escreva a consulta certa com parser dentro de count_over_time e status &gt;= 400.</p>
+</li>
+<li>
+<p>Execute e identifique as três rotas com mais respostas de falha.</p>
+</li>
+<li>
+<p>Remova o parser e o filtro de status e execute de novo.</p>
+</li>
+<li>
+<p>Compare: por que a versão sem parser devolve uma única série sem nome?</p>
+</li>
+</ol>
+<p><strong>✔ Forma certa</strong></p>
+<pre><code>topk(3, sum by (endpoint) (count_over_time({service=&quot;ecommerce-shop&quot;} | json | line_format &quot;{{.log}}&quot; | json | status &gt;= 400 [15m])))
+</code></pre>
+<p><img alt="Exercício 3.10 — forma certa" src="capturas/n3-3.10-certo.png" /></p>
+<p><strong>✘ Erro comum</strong></p>
+<pre><code>topk(3, sum by (endpoint) (count_over_time({service=&quot;ecommerce-shop&quot;} [15m])))
+</code></pre>
+<p>Sintoma: <code>Uma única série {}: o label endpoint não existe sem o parser</code></p>
+<p><img alt="Exercício 3.10 — erro comum" src="capturas/n3-3.10-erro.png" /></p>
+<p><strong>Por quê:</strong> Para agrupar por um campo de dentro do JSON, o parser precisa estar na consulta interna, antes da janela.</p>
+<p><strong>Resultado esperado:</strong> Séries por rota com status &gt;= 400. topk escolhe as 3 maiores em cada ponto, por isso mais nomes podem aparecer na legenda ao longo de 1 hora.</p>
+<p><strong>Registre:</strong> Qual rota lidera? A falha é 404 (não encontrado) ou 500 (erro do servidor)?</p>
+<h2>Cola rápida</h2>
+<pre><code>{service=&quot;ecommerce-shop&quot;}                         # seletor
+{service=&quot;ecommerce-shop&quot;, level=&quot;ERROR&quot;}          # label de nível
+|= &quot;texto&quot;   != &quot;texto&quot;   |~ &quot;(?i)regex&quot;           # filtros de linha
+| json | line_format &quot;{{.log}}&quot; | json             # JSON dentro do envelope Docker
+| status &gt;= 500                                      # filtro numérico (sem aspas)
+sum by (level) (count_over_time({...}[5m]))          # métrica a partir de logs
+topk(3, sum by (endpoint) (count_over_time({...} | json ... [15m])))
+</code></pre></body></html>

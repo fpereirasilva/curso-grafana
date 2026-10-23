@@ -1,0 +1,395 @@
+{
+  "data": "2026-10-19",
+  "dashboards": 15,
+  "provisionamentos_opcionais": 2,
+  "importacao_navegador_nesta_etapa": false,
+  "recursos_aplicados": false,
+  "credenciais_incluidas": false,
+  "originais_preservados_sha256": {
+    "C:\\Users\\FabioSilva\\Documents\\Codex\\2026-10-18\\ol\\outputs\\Curso_Grafana_Green_V8\\alunos\\importar\\01-dashboard-base.json": "4c5a2c5c3220b52ea16ed7a03dd75173f5ad1ea45b20bc6887b586d7a7b5839d",
+    "C:\\Users\\FabioSilva\\Documents\\Codex\\2026-10-18\\ol\\outputs\\Curso_Grafana_Green_V8\\alunos\\importar\\02-dashboard-completo.json": "a3ba4d96021acb62e3f54389c05c43cb6045fef1557f6d1616e9a280ea4a4d96",
+    "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\01-visao-geral-host.json": "acbec82e20694937cc05cd587b511c0ddfeeb015e3298d47b702bf5ec0ca918c",
+    "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\02-host-dinamico.json": "b76d10bb1bcbf6588c96c6dac5bef3a0b7824018fee711275f4516e9f3a0308a",
+    "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\03-containers.json": "61e7d3a278e8c65d28d07c7eeefdcd9a9f23d4edf239e3d8d33ff8225a8015b5",
+    "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\04-central-logs-loki.json": "235f00ab241d9375839565529166287e7b0ddfc7cec9f1b9b0e9bca0aa9212d1",
+    "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\05-ecommerce-apm-traces.json": "b25a4679e9a06f6bfa2e1a26e49fba15707436df36625408c6a1e6a71c82a6fa",
+    "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\06-dados-publicos-ibge-ssl-terremotos.json": "a78ff3d9496b3a8e95bcd6217ff58e56ab23195ea966dfb8445faee3fb177a56"
+  },
+  "catalogo": [
+    {
+      "arquivo": "aluno/01-dashboard-base.json",
+      "titulo": "Green - Grafana News - Modelo base",
+      "noite": "4",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Grafana News do lab do aluno iniciado; Prometheus conectado; gerar tráfego na aplicação e aguardar ao menos dois scrapes.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/02-dashboard-completo.json",
+      "titulo": "Green - Grafana News - Modelo completo",
+      "noite": "4",
+      "fontes": [
+        "Loki",
+        "Prometheus"
+      ],
+      "pre_requisitos": "Grafana News do lab do aluno iniciado; Prometheus conectado; gerar tráfego na aplicação e aguardar ao menos dois scrapes. Grafana News e Loki do lab do aluno iniciados; Loki conectado; rótulo filename=/var/log/tns-app.log presente.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/03-contador-requisicoes.json",
+      "titulo": "Green - 03 - Contador de requisições",
+      "noite": "2",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Grafana News do lab do aluno iniciado; Prometheus conectado; gerar tráfego na aplicação e aguardar ao menos dois scrapes.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/04-taxa-por-rota.json",
+      "titulo": "Green - 04 - Taxa por rota",
+      "noite": "2",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Grafana News do lab do aluno iniciado; Prometheus conectado; gerar tráfego na aplicação e aguardar ao menos dois scrapes.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/05-taxa-por-status.json",
+      "titulo": "Green - 05 - Taxa por status HTTP",
+      "noite": "2",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Grafana News do lab do aluno iniciado; Prometheus conectado; gerar tráfego na aplicação e aguardar ao menos dois scrapes.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/06-logs-aplicacao.json",
+      "titulo": "Green - 06 - Logs da aplicação",
+      "noite": "3",
+      "fontes": [
+        "Loki"
+      ],
+      "pre_requisitos": "Grafana News e Loki do lab do aluno iniciados; Loki conectado; rótulo filename=/var/log/tns-app.log presente.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/07-logs-erros.json",
+      "titulo": "Green - 07 - Investigação de erros",
+      "noite": "3",
+      "fontes": [
+        "Loki"
+      ],
+      "pre_requisitos": "Grafana News e Loki do lab do aluno iniciados; Loki conectado; rótulo filename=/var/log/tns-app.log presente. Gere um erro enviando um título sem URL no Grafana News.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/08-integrado-metricas-logs-anotacoes.json",
+      "titulo": "Green - 08 - Métricas, logs e anotações",
+      "noite": "4",
+      "fontes": [
+        "Loki",
+        "Prometheus"
+      ],
+      "pre_requisitos": "Grafana News do lab do aluno iniciado; Prometheus conectado; gerar tráfego na aplicação e aguardar ao menos dois scrapes. Grafana News e Loki do lab do aluno iniciados; Loki conectado; rótulo filename=/var/log/tns-app.log presente.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "aluno/09-projeto-final.json",
+      "titulo": "Green - 09 - Projeto final Grafana News",
+      "noite": "5",
+      "fontes": [
+        "Loki",
+        "Prometheus"
+      ],
+      "pre_requisitos": "Grafana News do lab do aluno iniciado; Prometheus conectado; gerar tráfego na aplicação e aguardar ao menos dois scrapes. Grafana News e Loki do lab do aluno iniciados; Loki conectado; rótulo filename=/var/log/tns-app.log presente.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador"
+    },
+    {
+      "arquivo": "professor/01-visao-geral-host.json",
+      "titulo": "01 - Visão geral do host",
+      "noite": "demonstração complementar",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Node Exporter com métricas node_* e acesso ao host.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador",
+      "ajustes_da_copia": [
+        "Disco: seletor / e exclusão de fstype=rootfs; ajuste conforme a montagem de seu host.",
+        "Uptime com unidade segundos."
+      ],
+      "origem": "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\01-visao-geral-host.json"
+    },
+    {
+      "arquivo": "professor/02-host-dinamico.json",
+      "titulo": "02 - Host dinâmico (variáveis)",
+      "noite": "demonstração complementar",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Node Exporter; a variável host consulta instance.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador",
+      "ajustes_da_copia": [
+        "Título de memória corrigido: a consulta compara hosts, não processos.",
+        "Rede: rate(bytes)*8 exibido em bits/s.",
+        "Heatmap renomeado para não sugerir agregação por hora do dia."
+      ],
+      "origem": "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\02-host-dinamico.json"
+    },
+    {
+      "arquivo": "professor/03-containers.json",
+      "titulo": "03 - Containers (cAdvisor)",
+      "noite": "demonstração complementar",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Exporter de containers que exponha container_cpu_usage_seconds_total e container_memory_usage_bytes com rótulo name.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador",
+      "ajustes_da_copia": [],
+      "origem": "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\03-containers.json"
+    },
+    {
+      "arquivo": "professor/04-central-logs-loki.json",
+      "titulo": "04 - Central de Logs (Loki)",
+      "noite": "demonstração complementar",
+      "fontes": [
+        "Loki"
+      ],
+      "pre_requisitos": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Loki com streams job=docker-containers; nível level disponível quando se desejar agrupamento por nível. TraceID exige configuração adicional de derived fields no Loki.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador",
+      "ajustes_da_copia": [
+        "count_over_time mede contagem por janela, não linhas/segundo; título/unidade corrigidos."
+      ],
+      "origem": "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\04-central-logs-loki.json"
+    },
+    {
+      "arquivo": "professor/05-ecommerce-apm-traces.json",
+      "titulo": "05 - E-Commerce APM e Traces",
+      "noite": "demonstração complementar",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Aplicação e-commerce do professor e séries http_requests_total e http_request_duration_seconds_sum/count com endpoint e status. Não contém painel Tempo: traces são acessados por Explore/derived fields previamente configurados.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador",
+      "ajustes_da_copia": [
+        "Removida estatística de legenda p95 para evitar confusão com percentil de requisições.",
+        "Contagem renomeada: requisições não equivalem necessariamente a pedidos.",
+        "Indicador renomeado para proporção HTTP 200, sem alegação de SLA."
+      ],
+      "origem": "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\05-ecommerce-apm-traces.json"
+    },
+    {
+      "arquivo": "professor/06-dados-publicos-ibge-ssl-terremotos.json",
+      "titulo": "06 - Dados públicos - modelo dependente de coletor",
+      "noite": "demonstração complementar",
+      "fontes": [
+        "Prometheus"
+      ],
+      "pre_requisitos": "Stack do professor; não é o Grafana News. Selecione a fonte de dados dessa stack ao importar. Requer coletor customizado de dados públicos: séries finance_*, iss_*, site_*, ibge_populacao_estado e usgs_earthquake_magnitude. O JSON não instala/exporta os coletores, não consulta APIs públicas diretamente e não comprova dados ao vivo.",
+      "tipo": "dashboard",
+      "validacao": "estrutural local; sem nova importação no navegador",
+      "ajustes_da_copia": [
+        "Somente portabilidade; nenhuma disponibilidade de dados públicos foi validada nesta entrega."
+      ],
+      "origem": "E:\\01_Projetos\\Curso Grafana\\lab\\dashboards-prontos-importacao\\06-dados-publicos-ibge-ssl-terremotos.json"
+    }
+  ],
+  "validacoes": [
+    {
+      "arquivo": "aluno/01-dashboard-base.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 1,
+      "consultas": 1,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/02-dashboard-completo.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 1,
+      "consultas": 1,
+      "datasources": [
+        "DS_LOKI",
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/03-contador-requisicoes.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 1,
+      "consultas": 1,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/04-taxa-por-rota.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 1,
+      "consultas": 1,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/05-taxa-por-status.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 1,
+      "consultas": 1,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/06-logs-aplicacao.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 1,
+      "consultas": 1,
+      "datasources": [
+        "DS_LOKI"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/07-logs-erros.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 1,
+      "consultas": 1,
+      "datasources": [
+        "DS_LOKI"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/08-integrado-metricas-logs-anotacoes.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 2,
+      "consultas": 2,
+      "datasources": [
+        "DS_LOKI",
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "aluno/09-projeto-final.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 6,
+      "consultas": 6,
+      "datasources": [
+        "DS_LOKI",
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "instrutor-alerting-opcional/01-contato-webhook-local.json",
+      "tipo": "provisionamento alerting",
+      "json_valido": true
+    },
+    {
+      "arquivo": "instrutor-alerting-opcional/02-regra-trafego-PAUSADA.json",
+      "tipo": "provisionamento alerting",
+      "json_valido": true
+    },
+    {
+      "arquivo": "professor/01-visao-geral-host.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 6,
+      "consultas": 7,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "professor/02-host-dinamico.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 7,
+      "consultas": 6,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "professor/03-containers.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 2,
+      "consultas": 2,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "professor/04-central-logs-loki.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 6,
+      "consultas": 4,
+      "datasources": [
+        "DS_LOKI"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "professor/05-ecommerce-apm-traces.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 7,
+      "consultas": 5,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    },
+    {
+      "arquivo": "professor/06-dados-publicos-ibge-ssl-terremotos.json",
+      "tipo": "dashboard",
+      "json_valido": true,
+      "paineis": 16,
+      "consultas": 11,
+      "datasources": [
+        "DS_PROMETHEUS"
+      ],
+      "id_uid_nulos": true
+    }
+  ]
+}

@@ -1,0 +1,117 @@
+{
+  "__inputs": [
+    { "name": "DS_PROMETHEUS", "label": "Prometheus", "description": "Fonte Prometheus que coleta as séries iss_*", "type": "datasource", "pluginId": "prometheus", "pluginName": "Prometheus" }
+  ],
+  "__requires": [
+    { "type": "grafana", "id": "grafana", "name": "Grafana", "version": "11.0.0" },
+    { "type": "datasource", "id": "prometheus", "name": "Prometheus", "version": "1.0.0" },
+    { "type": "panel", "id": "geomap", "name": "Geomap", "version": "" },
+    { "type": "panel", "id": "stat", "name": "Stat", "version": "" },
+    { "type": "panel", "id": "text", "name": "Text", "version": "" },
+    { "type": "panel", "id": "timeseries", "name": "Time series", "version": "" }
+  ],
+  "title": "ISS — Estação Espacial Internacional (exemplo público)",
+  "uid": "iss-estacao-espacial",
+  "tags": ["iss", "dados-publicos", "curso-grafana"],
+  "description": "Posição, altitude e velocidade da ISS a partir da API pública wheretheiss.at, coletadas pelo Prometheus como iss_latitude, iss_longitude, iss_altitude_km e iss_velocity_kmh.",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "graphTooltip": 1,
+  "refresh": "30s",
+  "time": { "from": "now-1h", "to": "now" },
+  "timepicker": {},
+  "templating": { "list": [] },
+  "annotations": { "list": [] },
+  "panels": [
+    {
+      "id": 1, "type": "text", "title": "Sobre este dashboard",
+      "gridPos": { "h": 4, "w": 24, "x": 0, "y": 0 },
+      "options": { "mode": "markdown", "content": "**Origem dos dados:** API pública [wheretheiss.at](https://wheretheiss.at/w/developer) (satélite 25544 = ISS), lida a cada coleta por um *exporter* e armazenada no Prometheus.\n\n**Séries:** `iss_latitude`, `iss_longitude` (graus), `iss_altitude_km` (km) e `iss_velocity_kmh` (km/h). São *gauges*: o valor atual muda para cima e para baixo; não use `rate()` nelas.\n\n**Para ler:** a ISS dá uma volta na Terra em cerca de 92 minutos, a ~27.600 km/h e ~420 km de altitude." }
+    },
+    {
+      "id": 2, "type": "stat", "title": "Velocidade orbital",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 5, "w": 6, "x": 0, "y": 4 },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_velocity_kmh", "instant": false, "range": true } ],
+      "fieldConfig": { "defaults": { "unit": "velocitykmh", "decimals": 0, "color": { "mode": "thresholds" }, "thresholds": { "mode": "absolute", "steps": [ { "color": "blue", "value": null } ] } }, "overrides": [] },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "value", "graphMode": "area", "textMode": "auto" }
+    },
+    {
+      "id": 3, "type": "stat", "title": "Altitude",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 5, "w": 6, "x": 6, "y": 4 },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_altitude_km", "instant": false, "range": true } ],
+      "fieldConfig": { "defaults": { "unit": "lengthkm", "decimals": 1, "color": { "mode": "thresholds" }, "thresholds": { "mode": "absolute", "steps": [ { "color": "green", "value": null } ] } }, "overrides": [] },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "value", "graphMode": "area", "textMode": "auto" }
+    },
+    {
+      "id": 4, "type": "stat", "title": "Latitude atual",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 5, "w": 6, "x": 12, "y": 4 },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_latitude", "instant": false, "range": true } ],
+      "fieldConfig": { "defaults": { "unit": "degree", "decimals": 2, "color": { "mode": "fixed", "fixedColor": "purple" } }, "overrides": [] },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "value", "graphMode": "none", "textMode": "auto" }
+    },
+    {
+      "id": 5, "type": "stat", "title": "Longitude atual",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 5, "w": 6, "x": 18, "y": 4 },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_longitude", "instant": false, "range": true } ],
+      "fieldConfig": { "defaults": { "unit": "degree", "decimals": 2, "color": { "mode": "fixed", "fixedColor": "purple" } }, "overrides": [] },
+      "options": { "reduceOptions": { "calcs": ["lastNotNull"], "fields": "", "values": false }, "colorMode": "value", "graphMode": "none", "textMode": "auto" }
+    },
+    {
+      "id": 6, "type": "geomap", "title": "Onde está a ISS agora?",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 11, "w": 14, "x": 0, "y": 9 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_latitude", "format": "table", "instant": false, "range": true },
+        { "refId": "B", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_longitude", "format": "table", "instant": false, "range": true }
+      ],
+      "transformations": [
+        { "id": "joinByField", "options": { "byField": "Time", "mode": "outer" } },
+        { "id": "organize", "options": { "renameByName": { "Value #A": "latitude", "Value #B": "longitude" } } }
+      ],
+      "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "red" } }, "overrides": [] },
+      "options": {
+        "view": { "id": "zero", "lat": 0, "lon": 0, "zoom": 1 },
+        "controls": { "showZoom": true, "mouseWheelZoom": true, "showAttribution": true },
+        "basemap": { "type": "default", "name": "Layer 0" },
+        "layers": [
+          { "type": "route", "name": "Trajeto no período", "config": { "style": { "size": { "fixed": 3, "min": 2, "max": 5 }, "color": { "fixed": "orange" }, "opacity": 0.8 } }, "location": { "mode": "coords", "latitude": "latitude", "longitude": "longitude" } },
+          { "type": "markers", "name": "Posição atual", "config": { "showLegend": false, "style": { "size": { "fixed": 9, "min": 2, "max": 15 }, "color": { "fixed": "red" }, "opacity": 1, "symbol": { "mode": "fixed", "fixed": "img/icons/marker/circle.svg" } } }, "location": { "mode": "coords", "latitude": "latitude", "longitude": "longitude" }, "filterData": { "id": "byRefId", "options": "B" } }
+        ],
+        "tooltip": { "mode": "details" }
+      }
+    },
+    {
+      "id": 7, "type": "timeseries", "title": "Altitude ao longo do tempo (km)",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 11, "w": 10, "x": 14, "y": 9 },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_altitude_km", "legendFormat": "altitude", "range": true } ],
+      "fieldConfig": { "defaults": { "unit": "lengthkm", "custom": { "lineWidth": 2, "fillOpacity": 12, "showPoints": "never" }, "color": { "mode": "fixed", "fixedColor": "green" } }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "single", "sort": "none" } }
+    },
+    {
+      "id": 8, "type": "timeseries", "title": "Velocidade ao longo do tempo (km/h)",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 20 },
+      "targets": [
+        { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "iss_velocity_kmh", "legendFormat": "velocidade", "range": true },
+        { "refId": "B", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "avg_over_time(iss_velocity_kmh[15m])", "legendFormat": "média móvel 15m", "range": true }
+      ],
+      "fieldConfig": { "defaults": { "unit": "velocitykmh", "custom": { "lineWidth": 2, "fillOpacity": 8, "showPoints": "never" } }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "multi", "sort": "none" } }
+    },
+    {
+      "id": 9, "type": "timeseries", "title": "Variação da altitude (km por minuto)",
+      "description": "deriv() estima a inclinação da série em cada janela: positivo = subindo, negativo = descendo.",
+      "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 20 },
+      "targets": [ { "refId": "A", "datasource": { "type": "prometheus", "uid": "${DS_PROMETHEUS}" }, "expr": "deriv(iss_altitude_km[5m]) * 60", "legendFormat": "km/min", "range": true } ],
+      "fieldConfig": { "defaults": { "unit": "none", "decimals": 2, "custom": { "lineWidth": 2, "fillOpacity": 10, "showPoints": "never" }, "color": { "mode": "fixed", "fixedColor": "blue" } }, "overrides": [] },
+      "options": { "legend": { "displayMode": "list", "placement": "bottom", "showLegend": true }, "tooltip": { "mode": "single", "sort": "none" } }
+    }
+  ]
+}

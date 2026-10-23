@@ -1,0 +1,694 @@
+{
+  "title": "Noite 3 — Loki: exercícios 3.4 a 3.10 (certo x erro)",
+  "uid": "noite3-loki-certo-erro",
+  "tags": [
+    "curso-grafana",
+    "noite-3",
+    "loki"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "editable": true,
+  "refresh": "",
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "description": "Cada linha mostra a forma certa (esquerda) e o erro comum (direita). Os painéis de erro ficam vazios ou mostram erro de sintaxe de propósito.",
+  "templating": {
+    "list": [
+      {
+        "name": "ds",
+        "label": "Fonte Loki",
+        "type": "datasource",
+        "query": "loki",
+        "current": {},
+        "hide": 0,
+        "refresh": 1,
+        "regex": "",
+        "options": []
+      }
+    ]
+  },
+  "annotations": {
+    "list": []
+  },
+  "panels": [
+    {
+      "type": "row",
+      "title": "Exercício 3.4 — Selecionar o serviço certo (Seletor de stream)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "panels": []
+    },
+    {
+      "id": 2,
+      "title": "3.4 ✔ Certo",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Valores de label são strings e precisam de aspas duplas. Um seletor vazio ({} ou service=~\".*\") também é recusado: o Loki exige ao menos um matcher que não aceite vazio.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 1
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"}",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "id": 3,
+      "title": "3.4 ✘ Erro comum",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Sintoma esperado: parse error at line 1, col 10: syntax error: unexpected IDENTIFIER, expecting STRING",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=ecommerce-shop}",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "type": "row",
+      "title": "Exercício 3.5 — Erros pelo label, não pelo texto (Label x filtro de linha)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 4,
+      "panels": []
+    },
+    {
+      "id": 5,
+      "title": "3.5 ✔ Certo",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "|= diferencia maiúsculas de minúsculas. Este serviço registra ERROR. Quando o nível já é label, filtrar no seletor é mais rápido e não depende do texto.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 11
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\", level=\"ERROR\"}",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "id": 6,
+      "title": "3.5 ✘ Erro comum",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Sintoma esperado: No data: 0 linhas (o texto do log usa ERROR em maiúsculas)",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"} |= \"error\"",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "type": "row",
+      "title": "Exercício 3.6 — Buscar texto ignorando maiúsculas (Filtro de linha com regex)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 7,
+      "panels": []
+    },
+    {
+      "id": 8,
+      "title": "3.6 ✔ Certo",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "(?i) dentro da regex liga a comparação sem diferenciar maiúsculas. |= procura o texto exatamente como foi digitado.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 21
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"} |~ \"(?i)gateway de pagamento\"",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "id": 9,
+      "title": "3.6 ✘ Erro comum",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Sintoma esperado: No data: 0 linhas (no log a palavra é \"gateway\", minúscula)",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 21
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"} |= \"Gateway\"",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "type": "row",
+      "title": "Exercício 3.7 — Abrir o JSON dentro do JSON (Parser json + line_format)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 30
+      },
+      "id": 10,
+      "panels": []
+    },
+    {
+      "id": 11,
+      "title": "3.7 ✔ Certo",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "O primeiro json só enxerga log, stream e time. É preciso trocar a linha pelo conteúdo de log e aplicar json outra vez para chegar em msg, endpoint e status. Como level já é label, o campo extraído vira level_extracted.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 31
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"} | json | line_format \"{{.log}}\" | json | line_format \"{{.level_extracted}} {{.endpoint}} {{.msg}}\"",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "id": 12,
+      "title": "3.7 ✘ Erro comum",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Sintoma esperado: Linhas como \"INFO  \": endpoint e msg vazios",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 31
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"} | json | line_format \"{{.level}} {{.endpoint}} {{.msg}}\"",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "type": "row",
+      "title": "Exercício 3.8 — Filtrar por status numérico (Filtro de label após parser)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 40
+      },
+      "id": 13,
+      "panels": []
+    },
+    {
+      "id": 14,
+      "title": "3.8 ✔ Certo",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Filtros de label só enxergam campos que já foram extraídos. Números são comparados sem aspas.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 41
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"} | json | line_format \"{{.log}}\" | json | status >= 500",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "id": 15,
+      "title": "3.8 ✘ Erro comum",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Sintoma esperado: No data: status ainda não existe sem o parser.  Com \"500\" entre aspas: syntax error: unexpected STRING",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 41
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "{service=\"ecommerce-shop\"} | status >= 500",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "logs",
+      "options": {
+        "showTime": true,
+        "wrapLogMessage": true,
+        "sortOrder": "Descending",
+        "enableLogDetails": true,
+        "dedupStrategy": "none",
+        "prettifyLogMessage": false,
+        "showLabels": false,
+        "showCommonLabels": false
+      }
+    },
+    {
+      "type": "row",
+      "title": "Exercício 3.9 — Contar logs por nível (Consulta de métrica)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 50
+      },
+      "id": 16,
+      "panels": []
+    },
+    {
+      "id": 17,
+      "title": "3.9 ✔ Certo",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Funções de range precisam da janela entre colchetes. count_over_time conta linhas na janela; rate divide pelos segundos da janela.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 51
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "sum by (level) (count_over_time({service=\"ecommerce-shop\"}[5m]))",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "title": "3.9 ✘ Erro comum",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Sintoma esperado: parse error: syntax error: unexpected )",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 51
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "count_over_time({service=\"ecommerce-shop\"})",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "type": "row",
+      "title": "Exercício 3.10 — Ranking das rotas com falha (Agregação + topk)",
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 60
+      },
+      "id": 19,
+      "panels": []
+    },
+    {
+      "id": 20,
+      "title": "3.10 ✔ Certo",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Para agrupar por um campo de dentro do JSON, o parser precisa estar na consulta interna, antes da janela.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 61
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "topk(3, sum by (endpoint) (count_over_time({service=\"ecommerce-shop\"} | json | line_format \"{{.log}}\" | json | status >= 400 [15m])))",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "title": "3.10 ✘ Erro comum",
+      "datasource": {
+        "type": "loki",
+        "uid": "${ds}"
+      },
+      "description": "Sintoma esperado: Uma única série {}: o label endpoint não existe sem o parser",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 61
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "loki",
+            "uid": "${ds}"
+          },
+          "expr": "topk(3, sum by (endpoint) (count_over_time({service=\"ecommerce-shop\"} [15m])))",
+          "queryType": "range",
+          "editorMode": "code"
+        }
+      ],
+      "type": "timeseries",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "lineWidth": 2
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi"
+        }
+      }
+    }
+  ]
+}

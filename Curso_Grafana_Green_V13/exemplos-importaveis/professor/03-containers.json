@@ -1,0 +1,41 @@
+{
+  "annotations": { "list": [] },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "percent" } },
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "id": 1,
+      "title": "CPU por container (top 5)",
+      "type": "timeseries",
+      "targets": [
+        { "expr": "topk(5, rate(container_cpu_usage_seconds_total{name!=\"\"}[5m]) * 100)", "legendFormat": "{{name}}", "refId": "A" }
+      ]
+    },
+    {
+      "datasource": { "type": "prometheus", "uid": "prometheus" },
+      "fieldConfig": { "defaults": { "unit": "bytes" } },
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "id": 2,
+      "title": "Memória por container (top 5)",
+      "type": "timeseries",
+      "targets": [
+        { "expr": "topk(5, container_memory_usage_bytes{name!=\"\"})", "legendFormat": "{{name}}", "refId": "A" }
+      ]
+    }
+  ],
+  "refresh": "15s",
+  "schemaVersion": 39,
+  "tags": ["lab", "intermediario", "cadvisor"],
+  "templating": { "list": [] },
+  "time": { "from": "now-30m", "to": "now" },
+  "title": "03 - Containers (cAdvisor)",
+  "uid": "lab-containers-cadvisor",
+  "version": 1
+}

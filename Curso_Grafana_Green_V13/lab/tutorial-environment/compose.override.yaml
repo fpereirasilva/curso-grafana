@@ -1,0 +1,10 @@
+services:
+  webhook:
+    image: python:3.12-slim
+    command: ["python", "-u", "/app/webhook.py"]
+    volumes:
+      - ./webhook.py:/app/webhook.py:ro
+    ports:
+      - "127.0.0.1:38090:8080"
+    networks:
+      - grafana
