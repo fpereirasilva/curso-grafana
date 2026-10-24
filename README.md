@@ -10,6 +10,19 @@
 
 ---
 
+## 📚 LIVROS DE REFERÊNCIA OFICIAIS DO CURSO (EM DESTAQUE)
+
+Disponibilizamos como leitura complementar recomendada para a formação profissional dois livros consagrados pela indústria:
+
+| Livro | Autor(es) / Referência | Foco Pedagógico no Curso | Acesso no Repositório |
+| :--- | :--- | :--- | :--- |
+| 📘 **Getting Started with Grafana** | **Ronald McCollam** | Construção prática de dashboards em tempo real, painéis, alertas e conexões de dados no Grafana. | [Baixar / Abrir Livro (PDF)](./Getting%20Started%20with%20Grafana%20-%20real-time%20dashboards%20for%20--%20Ronald%20McCollam%20.pdf) |
+| 📗 **Engenharia de Confiabilidade do Google (SRE)** | **Betsy Beyer, Chris Jones, Jennifer Petoff, Niall Richard Murphy** | Fundamentos essenciais de observabilidade: SLIs, SLOs, SLAs, monitoramento de sistemas distribuídos e resposta a incidentes. | [Baixar / Abrir Livro (PDF)](./Curso_Grafana_Green_V13/material_extra/Engenharia%20de%20Confiabilidade%20do%20Google%20--%20Betsy%20Beyer%20%26%20Chris%20Jones%20%26%20Jennifer%20Petoff%20%26%20Niall%20Richard.pdf) |
+
+> 💡 *Ambos os livros estão disponíveis para os alunos na pasta `material_extra` da versão V13 e na raiz deste repositório.*
+
+---
+
 ## 🎥 VÍDEOS OFICIAIS DA APRESENTAÇÃO (EMBEDDED)
 
 Assista aos vídeos oficiais demonstrativos presentes nos slides da apresentação do curso:
