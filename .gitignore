@@ -12,6 +12,10 @@ __pycache__/
 
 # Ambientes virtuais e IDEs
 .vscode/
+!Aula 04 - Engenharia de prompt - VSCode Copilot/.vscode/
+Aula 04 - Engenharia de prompt - VSCode Copilot/.vscode/*
+!Aula 04 - Engenharia de prompt - VSCode Copilot/.vscode/settings.json
+!Aula 04 - Engenharia de prompt - VSCode Copilot/.vscode/tasks.json
 .idea/
 .env
 .env.local

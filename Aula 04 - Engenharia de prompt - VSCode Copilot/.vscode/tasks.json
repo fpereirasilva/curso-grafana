@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1. Azure: Criar Ambiente no Azure",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\criar-ambiente-azure.ps1"
+      ],
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "2. Azure: Sincronizar e Subir Stack",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\sincronizar-e-iniciar.ps1"
+      ],
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "3. Lab: Gerar Tráfego e Simular Caos",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\gerar-trafego.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "4. Azure: Desalocar VM (Pausar Custos)",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\parar-ambiente-azure.ps1"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "5. Azure: Deletar Resource Group (Limpeza Total)",
+      "type": "shell",
+      "command": "powershell.exe",
+      "args": [
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${workspaceFolder}\\scripts\\limpar-ambiente-azure.ps1"
+      ],
+      "problemMatcher": []
+    }
+  ]
+}

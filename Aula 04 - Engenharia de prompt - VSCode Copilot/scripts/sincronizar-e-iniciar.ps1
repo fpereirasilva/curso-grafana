@@ -1,4 +1,4 @@
-param(
+﻿param(
     [string]$ResourceGroupName = "rgaula4copilot",
     [string]$VmName = "vm-copilot-grafana",
     [string]$AdminUsername = "labadmin",
@@ -7,10 +7,14 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+if (-not (Test-Path -LiteralPath $SshPrivateKeyPath)) {
+    throw "A chave privada SSH não foi encontrada: $SshPrivateKeyPath"
+}
+
 Write-Host "[*] Buscando IP Público da VM $VmName no RG $ResourceGroupName..." -ForegroundColor Yellow
 $publicIp = az network public-ip show --resource-group $ResourceGroupName --name "${VmName}-ip" --query ipAddress --output tsv
 
-if (-not $publicIp) {
+if ($LASTEXITCODE -ne 0 -or -not $publicIp) {
     throw "Não foi possível obter o IP Público da VM."
 }
 
@@ -30,6 +34,10 @@ while (-not $ready -and $retries -gt 0) {
         Start-Sleep -Seconds 4
         $retries--
     }
+}
+
+if (-not $ready) {
+    throw "A porta SSH da VM não respondeu após as tentativas. Verifique o estado da VM e a regra de acesso."
 }
 
 # 2. Instalar Docker e Compose na VM via SSH
@@ -52,7 +60,10 @@ mkdir -p /home/labadmin/aula4-observabilidade/app-demo
 mkdir -p /home/labadmin/aula4-observabilidade/notification-receiver
 '@
 
-ssh -o StrictHostKeyChecking=no -i $SshPrivateKeyPath "${AdminUsername}@${publicIp}" $setupCmd
+ssh -o StrictHostKeyChecking=accept-new -i $SshPrivateKeyPath "${AdminUsername}@${publicIp}" $setupCmd
+if ($LASTEXITCODE -ne 0) {
+    throw "Falha ao instalar Docker ou preparar os diretórios na VM."
+}
 
 # 3. Copiar os arquivos locais para a VM usando tar + ssh
 Write-Host "[*] Sincronizando arquivos da stack, app-demo e receptor para a VM..." -ForegroundColor Yellow
@@ -62,9 +73,17 @@ $baseDir = (Get-Item $PSScriptRoot).Parent.FullName
 Push-Location $baseDir
 try {
     tar -czf lab-files.tar.gz stack app-demo notification-receiver
-    scp -o StrictHostKeyChecking=no -i $SshPrivateKeyPath lab-files.tar.gz "${AdminUsername}@${publicIp}:/home/labadmin/aula4-observabilidade/"
-    Remove-Item lab-files.tar.gz -Force
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao compactar os arquivos da stack."
+    }
+    scp -o StrictHostKeyChecking=accept-new -i $SshPrivateKeyPath lab-files.tar.gz "${AdminUsername}@${publicIp}:/home/labadmin/aula4-observabilidade/"
+    if ($LASTEXITCODE -ne 0) {
+        throw "Falha ao copiar os arquivos da stack para a VM."
+    }
 } finally {
+    if (Test-Path -LiteralPath (Join-Path $baseDir "lab-files.tar.gz")) {
+        Remove-Item -LiteralPath (Join-Path $baseDir "lab-files.tar.gz") -Force
+    }
     Pop-Location
 }
 
@@ -74,19 +93,21 @@ $startCmd = @'
 set -e
 cd /home/labadmin/aula4-observabilidade
 tar -xzf lab-files.tar.gz
+rm -f lab-files.tar.gz
 cd stack
-# Ajustar permissões para volumes
-sudo mkdir -p /var/log/app && sudo chmod 777 /var/log/app
 sudo docker compose up -d --build
 sudo docker compose ps
 '@
 
-ssh -o StrictHostKeyChecking=no -i $SshPrivateKeyPath "${AdminUsername}@${publicIp}" $startCmd
+ssh -o StrictHostKeyChecking=accept-new -i $SshPrivateKeyPath "${AdminUsername}@${publicIp}" $startCmd
+if ($LASTEXITCODE -ne 0) {
+    throw "Falha ao iniciar ou verificar os containers da stack."
+}
 
 Write-Host "=================================================================" -ForegroundColor Green
 Write-Host "🎉 STACK DA AULA 04 EM EXECUÇÃO NO AZURE!" -ForegroundColor Green
 Write-Host "Grafana:       http://${publicIp}:3000 (admin / admin)" -ForegroundColor Yellow
 Write-Host "Prometheus:    http://${publicIp}:9090" -ForegroundColor Yellow
-Write-Host "App Demo:      http://${publicIp}:8000/checkout" -ForegroundColor Yellow
-Write-Host "Túnel SSH:     ssh -L 3000:localhost:3000 -L 9090:localhost:9090 -i $SshPrivateKeyPath ${AdminUsername}@${publicIp}" -ForegroundColor Yellow
+Write-Host "App Demo (via túnel): http://localhost:8000/checkout" -ForegroundColor Yellow
+Write-Host "Túnel SSH:     ssh -L 3000:localhost:3000 -L 8000:localhost:8000 -L 9090:localhost:9090 -i $SshPrivateKeyPath ${AdminUsername}@${publicIp}" -ForegroundColor Yellow
 Write-Host "=================================================================" -ForegroundColor Green

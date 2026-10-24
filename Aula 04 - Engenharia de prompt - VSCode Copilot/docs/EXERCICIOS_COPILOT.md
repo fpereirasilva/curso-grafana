@@ -1,26 +1,28 @@
 # ✍️ Exercícios Práticos com GitHub Copilot — Aula 04
 
-Nesta atividade, você resolverá os desafios utilizando a ajuda do GitHub Copilot Chat no VS Code (`@workspace`).
+Nesta atividade, use o GitHub Copilot Chat no VS Code e os prompt files desta workspace. Anexe os arquivos indicados em cada exercício; não presuma que o Copilot carregou todo o repositório.
 
 ---
 
-### Desafio 1: Criando uma Consulta PromQL de Tráfego com @workspace
-1. Abra o painel do Copilot Chat (`Ctrl+Alt+I`).
-2. Peça ao Copilot para inspecionar `app-demo/app.py` e gerar uma consulta PromQL que calcule a taxa de requisições por segundo (RPS) apenas para requisições bem-sucedidas (`status="200"`).
-3. Abra o Grafana no navegador (`:3000`), cole a consulta no **Explore** e valide o resultado.
+### Desafio 1: RPS de respostas HTTP 200 com PromQL
+1. Abra o Chat pelo ícone ou pelo Command Palette (`Chat: New Chat`).
+2. Digite `/promql-observability`, informe que quer RPS de respostas `status="200"` e anexe `app-demo/app.py` e `stack/prometheus/prometheus.yml`.
+3. Peça a consulta, a explicação dos labels e uma nota sobre a janela de `rate()`. Não peça alterações de código.
+4. Se o ambiente estiver autorizado e em execução, valide a query em **Grafana -> Explore -> Prometheus**.
 
-### Desafio 2: Extraindo Campos de Log com LogQL e Copilot
-1. Abra o arquivo `stack/alloy/config.alloy` no editor.
-2. No chat do Copilot, pergunte: `@workspace Com base no arquivo aberto, como montar uma consulta LogQL que filtre o level "ERROR" e me mostre a duração e o request_id?`
-3. Execute a query gerada pelo Copilot na fonte Loki dentro do Grafana.
+### Desafio 2: Extraindo campos de log com LogQL
+1. Digite `/logql-observability` no Chat.
+2. Anexe `app-demo/app.py` e `stack/alloy/config.alloy` e peça uma consulta que filtre `level="ERROR"` e apresente `duration_ms` e `request_id`.
+3. Execute a query no Explore com a fonte Loki apenas se o ambiente estiver disponível; diferencie campos extraídos com `| json` de labels de stream.
 
-### Desafio 3: Criando uma Nova Regra de Alerta com o Copilot
-1. Abra o arquivo `stack/prometheus/rules/alert.rules.yml`.
-2. Pressione `Ctrl+I` no editor e instrua o Copilot inline:
-   `"Crie uma regra de alerta para Erros 5xx excessivos que dispare se a taxa passar de 20% das requisições por mais de 1 minuto."`
-3. Valide a sintaxe gerada.
+### Desafio 3: Propondo uma regra de alerta de 5xx
+1. No Chat, selecione Agent/Edit quando disponível e anexe `stack/prometheus/rules/alert.rules.yml` e `app-demo/app.py`.
+2. Peça para adicionar uma regra separada `HighHttpErrorRate20Percent`, com taxa de 5xx acima de 20% por 1 minuto, protegendo a divisão por zero.
+3. Instrua o Copilot a preservar as regras existentes e mostrar o diff. Revise o diff antes de aceitá-lo.
+4. Compare a nova regra com a regra já existente `HighHttpErrorRate` (15%, `for: 30s`). Valide a sintaxe YAML e a expressão PromQL antes de qualquer reload do Prometheus.
 
-### Desafio 4: Investigando Causa Raiz de um Incidente com /explain
-1. Durante a injeção de falhas com o script `gerar-trafego.ps1`, selecione a função `checkout()` no arquivo `app-demo/app.py`.
-2. Use o comando `/explain` no chat e pergunte: `"Quais condições levam a função a retornar HTTP 500 ou causar latência superior a 500ms?"`
-3. Explique como correlacionar essas condições aos dados visualizados no painel do Grafana.
+### Desafio 4: Investigando causa raiz com contexto explícito
+1. Anexe `app-demo/app.py`, `scripts/gerar-trafego.ps1`, `stack/prometheus/rules/alert.rules.yml` e `stack/alloy/config.alloy`.
+2. Digite `/investigate-observability-incident` e pergunte quais caminhos geram HTTP 500 ou latência acima de 500 ms.
+3. Peça queries PromQL e LogQL para testar a hipótese e explique a ordem dos casos `chaos=latency` e `chaos=error` no gerador.
+4. Só afirme correlação com dados observados se você realmente executar as queries no ambiente.

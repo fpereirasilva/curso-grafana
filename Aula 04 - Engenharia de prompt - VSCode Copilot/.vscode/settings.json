@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "github.copilot.enable": {
+    "*": true,
+    "yaml": true,
+    "json": true,
+    "bicep": true,
+    "python": true,
+    "markdown": true
+  },
+  "github.copilot.chat.localeOverride": "pt-br",
+  "github.copilot.chat.codeGeneration.useInstructionFiles": true,
+  "bicep.experimentalFeaturesEnabled": true,
+  "terminal.integrated.defaultProfile.windows": "PowerShell"
+}
