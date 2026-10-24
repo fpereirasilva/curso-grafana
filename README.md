@@ -23,6 +23,20 @@ Disponibilizamos como leitura complementar recomendada para a formação profiss
 
 ---
 
+## 🏛️ ARQUITETURA OFICIAL DA PLATAFORMA DE OBSERVABILIDADE
+
+Abaixo estão os diagramas oficiais da arquitetura da plataforma implantada nos laboratórios do curso, demonstrando o fluxo de coleta de métricas com Prometheus, ingestão de logs estruturados com Loki e Alloy, e correlação unificada de dados no Grafana:
+
+### 📐 Visão Geral da Arquitetura da Plataforma
+![Arquitetura da Plataforma de Observabilidade](./assets/arquitetura/arquitetura-observabilidade-geral.png)
+
+### 🔬 Topologia Detalhada dos Componentes e Fluxo de Telemetria
+![Topologia Detalhada dos Componentes](./assets/arquitetura/arquitetura-observabilidade-detalhada.png)
+
+> 🧩 *O arquivo editável original dos diagramas está disponível em [Arquitetura_IA_Observabilidade.drawio](./Aula%2004%20-%20Engenharia%20de%20prompt%20-%20plataforma%20grafana/Arquitetura_IA_Observabilidade.drawio).*
+
+---
+
 ## 🎥 VÍDEOS OFICIAIS DA APRESENTAÇÃO (EMBEDDED)
 
 Assista aos vídeos oficiais demonstrativos presentes nos slides da apresentação do curso:
