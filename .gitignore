@@ -4,6 +4,9 @@ _orig-*
 _test-*
 *.zip
 
+# Imagens baixadas soltas na raiz
+download*.png
+
 # Node / Python
 node_modules/
 __pycache__/
