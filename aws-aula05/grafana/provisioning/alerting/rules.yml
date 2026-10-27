@@ -1,0 +1,227 @@
+apiVersion: 1
+
+groups:
+  - orgId: 1
+    folder: Aula 05 - APM e Traces
+    name: aws-lambda-alerting
+    interval: 1m
+    rules:
+      - uid: aws-lambda-critical-errors
+        title: "🚨 Lambda Alerting: Taxa de Falhas Críticas"
+        condition: C
+        noDataState: NoData
+        execErrState: Error
+        for: 1m
+        annotations:
+          summary: "Lambda fn-order-processor está gerando mais de 3 erros CRITICAL em 5 minutos"
+          description: "Verifique o dashboard 07 - AWS Lambda Alerting & Logs em http://3.94.62.252:3000/d/aws-lambda-alerting/"
+          runbook_url: "https://github.com/fpereirasilva/curso-grafana/tree/main/aws-aula05"
+        labels:
+          severity: critical
+          service: aws-lambda
+          curso: grafana-v1
+          ambiente: aws-production
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: loki
+            model:
+              expr: 'sum(count_over_time({app="lambda-order-processor", severity="CRITICAL"}[5m])) or vector(0)'
+              queryType: range
+              refId: A
+              editorMode: code
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              type: reduce
+              expression: A
+              reducer: last
+              conditions:
+                - evaluator:
+                    params:
+                      - 3
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              refId: B
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    params:
+                      - 3
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              refId: C
+
+      - uid: aws-lambda-error-rate-high
+        title: "⚠️ Lambda Alerting: Taxa de Erros Acima de 20%"
+        condition: C
+        noDataState: NoData
+        execErrState: Error
+        for: 2m
+        annotations:
+          summary: "A taxa de falhas da Lambda fn-order-processor está acima de 20% no período de 5 minutos"
+          description: "Investigar logs CRITICAL no dashboard 07 - AWS Lambda Alerting & Logs"
+        labels:
+          severity: warning
+          service: aws-lambda
+          curso: grafana-v1
+          ambiente: aws-production
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: loki
+            model:
+              expr: 'sum(count_over_time({app="lambda-order-processor", severity="CRITICAL"}[5m])) / sum(count_over_time({app="lambda-order-processor"}[5m])) * 100 or vector(0)'
+              queryType: range
+              refId: A
+              editorMode: code
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              type: reduce
+              expression: A
+              reducer: last
+              conditions:
+                - evaluator:
+                    params:
+                      - 20
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              refId: B
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    params:
+                      - 20
+                    type: gt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              refId: C
+
+      - uid: aws-lambda-silent
+        title: "🔇 Lambda Alerting: Lambda Sem Execuções (Silêncio Suspeito)"
+        condition: C
+        noDataState: Alerting
+        execErrState: Error
+        for: 3m
+        annotations:
+          summary: "A Lambda fn-order-processor não está gerando logs há mais de 3 minutos"
+          description: "Verificar se a Lambda e o EventBridge estão ativos"
+        labels:
+          severity: warning
+          service: aws-lambda
+          curso: grafana-v1
+          ambiente: aws-production
+        data:
+          - refId: A
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: loki
+            model:
+              expr: 'sum(count_over_time({app="lambda-order-processor"}[5m])) or vector(0)'
+              queryType: range
+              refId: A
+              editorMode: code
+          - refId: B
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              type: reduce
+              expression: A
+              reducer: last
+              conditions:
+                - evaluator:
+                    params:
+                      - 5
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - B
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              refId: B
+          - refId: C
+            relativeTimeRange:
+              from: 300
+              to: 0
+            datasourceUid: __expr__
+            model:
+              type: threshold
+              expression: B
+              conditions:
+                - evaluator:
+                    params:
+                      - 5
+                    type: lt
+                  operator:
+                    type: and
+                  query:
+                    params:
+                      - C
+                  reducer:
+                    params: []
+                    type: last
+                  type: query
+              refId: C

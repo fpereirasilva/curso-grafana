@@ -1,0 +1,35 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: email-curso-grafana
+    receivers:
+      - uid: email-curso-grafana
+        type: email
+        settings:
+          addresses: fabio.silva@softwareone.com
+
+policies:
+  - orgId: 1
+    receiver: email-curso-grafana
+    group_by: ['grafana_folder', 'alertname']
+    group_wait: 30s
+    group_interval: 5m
+    repeat_interval: 4h
+
+templates:
+  - orgId: 1
+    name: curso-grafana-alerta
+    template: |
+      {{ define "curso-grafana-alerta" }}
+      🚨 ALERTA CURSO GRAFANA — AWS Lambda Alerting
+      ==============================================
+      {{ range .Alerts }}
+      • Alerta:  {{ .Annotations.summary }}
+      • Detalhe: {{ .Annotations.description }}
+      • Severidade: {{ .Labels.severity }}
+      • Valor: {{ .Value }}
+      • Horário: {{ .StartsAt }}
+      {{ end }}
+      Dashboard: http://3.94.62.252:3000/d/aws-lambda-alerting/
+      {{ end }}
