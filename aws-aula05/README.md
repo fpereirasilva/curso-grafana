@@ -45,7 +45,7 @@ wsl bash -c "chmod +x '/mnt/e/01_Projetos/Curso Grafana/aws-aula05/deploy-aws.sh
 
 O script faz **tudo automaticamente**:
 * ✅ Localiza VPC e Subnet padrão em `us-east-1`
-* ✅ Cria Security Group `sg-curso-grafana-aula05` com portas `22`, `3000`, `9090`, `3100`, `3200`, `8000` liberadas
+* ✅ Cria Security Group `curso-grafana-aula05-sg` com portas `22`, `3000`, `9090`, `3100`, `3200`, `8000` liberadas
 * ✅ Gera Key Pair SSH `curso-grafana-aws-key.pem`
 * ✅ Seleciona a AMI Ubuntu 22.04 LTS mais recente
 * ✅ Lança EC2 `t3.small` (20GB gp3, 2 vCPU, 2GB RAM)

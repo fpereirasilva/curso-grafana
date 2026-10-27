@@ -3,7 +3,7 @@
 set -euo pipefail
 REGION="us-east-1"
 TAG_NAME="vm-grafana-aula05-aws"
-SG_NAME="sg-curso-grafana-aula05"
+SG_NAME="curso-grafana-aula05-sg"
 KEY_NAME="curso-grafana-aws-key"
 
 echo "================================================================="

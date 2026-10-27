@@ -10,7 +10,7 @@ REGION="us-east-1"
 INSTANCE_TYPE="t3.small"
 KEY_NAME="curso-grafana-aws-key"
 KEY_FILE="$HOME/.ssh/${KEY_NAME}.pem"
-SG_NAME="sg-curso-grafana-aula05"
+SG_NAME="curso-grafana-aula05-sg"
 TAG_NAME="vm-grafana-aula05-aws"
 
 echo "================================================================="
